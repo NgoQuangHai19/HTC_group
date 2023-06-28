@@ -157,3 +157,4 @@ while True:
     serial_read_data(ser)
     ser.write(soil_distance)
     print(ser)
+    time.sleep(2)
