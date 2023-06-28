@@ -13,7 +13,7 @@ def getPort():
         port = ports[i]
         strPort = str(port)
         print(strPort) # print(strPort)
-        if "FT232R USB UART" in strPort:
+        if "/dev/ttyAMA1" in strPort:
             splitPort = strPort.split(" ")
             print("PortName:",strPort)
             commPort = splitPort[0]
@@ -150,19 +150,19 @@ client.connect()
 client.loop_background()
 
 while True:
-    # print("TEST MOTOR")
-    # setDevice1(True)
-    # time.sleep(2)
-    # setDevice1(False)
-    # time.sleep(2)
+    print("TEST MOTOR")
+    setDevice1(True)
+    time.sleep(2)
+    setDevice1(False)
+    time.sleep(2)
     
-    # setDevice2(True)
-    # time.sleep(2)
-    # setDevice2(False)
-    # time.sleep(2)
+    setDevice2(True)
+    time.sleep(2)
+    setDevice2(False)
+    time.sleep(2)
     print("TEST SENSOR")
     print("Temp :",readTemperature())
-    #print(readMoisture())
-   # print(ser.read())
+    print(readMoisture())
+    print(ser.read())
     time.sleep(2)
 
