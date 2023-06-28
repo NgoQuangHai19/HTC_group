@@ -153,8 +153,7 @@ client.on_subscribe = subscribe
 client.connect()
 client.loop_background()
 
-while True:
-    serial_read_data(ser)
+while True: 
     ser.write(soil_distance)
-    print(ser)
+    print(serial_read_data(ser))
     time.sleep(2)
