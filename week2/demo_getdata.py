@@ -13,7 +13,7 @@ def getPort():
         port = ports[i]
         strPort = str(port)
         print(strPort) # print(strPort)
-        if "/dev/ttyAMA1" in strPort:
+        if "/dev/ttyAMA2" in strPort:
             splitPort = strPort.split(" ")
             print("PortName:",strPort)
             commPort = splitPort[0]
@@ -25,8 +25,8 @@ print("portName:",portName)
 if portName != "None":
     ser = serial.Serial(port=portName, baudrate=9600)
 
-relay1_ON = [0, 6, 0, 0, 0, 255, 200, 91]
-relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
+relay1_ON = [5, 6, 0, 0, 0, 255, 200, 14]
+relay1_OFF = [5, 6, 0, 0, 0, 0, 136, 78]
 
 
 def setDevice1(state):
@@ -82,7 +82,7 @@ soil_temperature = [3,
 
 
 def readTemperature():
-    serial_read_data(ser)# doc dang co trong buff cà xoa het buffer.
+    serial_read_data(ser)# doc dang co trong buff va xoa het buffer.
     ser.write(soil_temperature)
     time.sleep(1)
     temp = serial_read_data(ser)
@@ -150,19 +150,22 @@ client.connect()
 client.loop_background()
 
 while True:
-    print("TEST MOTOR")
-    setDevice1(True)
-    time.sleep(2)
-    setDevice1(False)
-    time.sleep(2)
+    # print("TEST MOTOR")
+    # setDevice1(True)
+    # time.sleep(2)
+    # setDevice1(False)
+    # time.sleep(2)
     
+    # setDevice2(True)
+    # time.sleep(2)
+    # setDevice2(False)
+    # time.sleep(2)
+    # print("TEST SENSOR")
+    # print("Temp :",readTemperature())
+    # print(readMoisture())
+    # print(ser.read())
+    # time.sleep(2)
+
+    print("TEST DISTANCE")
     setDevice2(True)
     time.sleep(2)
-    setDevice2(False)
-    time.sleep(2)
-    print("TEST SENSOR")
-    print("Temp :",readTemperature())
-    print(readMoisture())
-    print(ser.read())
-    time.sleep(2)
-
