@@ -109,7 +109,8 @@ def readMoisture():
 
 
 
-soil_distance = [12, 6, 0, 5, 0, 1, 89, 22]
+# soil_distance = [12, 6, 0, 5, 0, 1, 89, 22]
+soil_distance = [12, 3, 0, 3, 0, 1, 117, 23]
 
 ##Adafruit
 AIO_FEED_ID = ["moisture", "temp", "relay-1","relay-2"]
