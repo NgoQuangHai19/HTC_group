@@ -13,7 +13,7 @@ def getPort():
         port = ports[i]
         strPort = str(port)
         print(strPort) # print(strPort)
-        if "FT232R USB UART" in strPort:
+        if "/dev/ttyAMA2" in strPort:
             splitPort = strPort.split(" ")
             print("PortName:",strPort)
             commPort = splitPort[0]
