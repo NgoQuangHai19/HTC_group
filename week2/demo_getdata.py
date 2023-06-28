@@ -1,9 +1,5 @@
 import time
-from Adafruit_IO import MQTTClient
-import sys
-print("Sensors and Actuators")
 import serial.tools.list_ports
-
 
 def getPort():
     ports = serial.tools.list_ports.comports()
@@ -19,42 +15,6 @@ def getPort():
             commPort = splitPort[0]
     return commPort
 
-
-portName = getPort()
-print("portName:",portName)
-if portName != "None":
-    ser = serial.Serial(port=portName, baudrate=9600)
-
-relay1_ON = [5, 6, 0, 0, 0, 255, 200, 14]
-relay1_OFF = [5, 6, 0, 0, 0, 0, 136, 78]
-
-
-def setDevice1(state):
-    serial_read_data(ser)
-    #print(ser)
-    if state == True:
-        ser.write(relay1_ON)
-        client.publish(AIO_FEED_ID[2],1)
-    else:
-        ser.write(relay1_OFF)
-        client.publish(AIO_FEED_ID[2],0)
-
-
-relay2_ON = [15, 6, 0, 0, 0, 255, 200, 164]
-relay2_OFF = [15, 6, 0, 0, 0, 0, 136, 228]
-
-
-def setDevice2(state):
-    serial_read_data(ser)
-    #print(ser)
-    if state == True:
-        ser.write(relay2_ON)
-        #client.publish(AIO_FEED_ID[3],1)
-    else:
-        ser.write(relay2_OFF)
-        #client.publish(AIO_FEED_ID[3],0)
-
-
 def serial_read_data(ser):
     bytesToRead = ser.inWaiting()
     if bytesToRead > 0:
@@ -69,103 +29,72 @@ def serial_read_data(ser):
             return -1
     return 0
 
-
-soil_temperature = [3,
-          3,
-          0,
-          0,
-          0,
-          1,
-          133,
-          232
-]
-
-
-def readTemperature():
-    serial_read_data(ser)# doc dang co trong buff va xoa het buffer.
-    ser.write(soil_temperature)
-    time.sleep(1)
-    temp = serial_read_data(ser)
-    client.publish(AIO_FEED_ID[1],temp)
-    return temp
-
-
-soil_moisture = [3,
-          3,
-          0,
-          1,
-          0,
-          1,
-          212,
-          40]
-
-
-def readMoisture():
+def setDevice1(state):
     serial_read_data(ser)
-    ser.write(soil_moisture)
-    time.sleep(1)
-    client.publish(AIO_FEED_ID[0],serial_read_data(ser))
-    return serial_read_data(ser)
+    #print(ser)
+    if state == True:
+        ser.write(relay1_ON)
+        # client.publish(AIO_FEED_ID[2],1)
+    else:
+        ser.write(relay1_OFF)
+        # client.publish(AIO_FEED_ID[2],0)
 
-##Adafruit
-AIO_FEED_ID = ["moisture", "temp", "relay-1","relay-2"]
-AIO_USERNAME = "Thesis_SmartAgri"
-AIO_KEY = "aio_HQLV330frfpmBwzKI76YlI0Z1DYh"
+portName = getPort()
+print("portName:",portName)
+if portName != "None":
+    ser = serial.Serial(port=portName, baudrate=9600)
 
+relay1_ON = [1, 6, 0, 0, 0, 255, 201, 138]
+relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
 
+# relay6_ON = [1, 6, 0, 0, 0, 255, 201, 138]
+# relay6_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
 
-# THUC HIEN HANH CHUC NANG
+distance1_ON = [9, 3, 0, 5, 0, 1, 149, 67]
+distance2_ON = [12, 3, 0, 5, 0, 1, 149, 22]
+# distance2_OFF = [12, 6, 0, 8, 0, 9, 201, 19]
 
+relay_ON = [[1, 6, 0, 0, 0, 255, 201, 138],
+[2, 6, 0, 0, 0, 255, 201, 185],
+[3, 6, 0, 0, 0, 255, 200, 104],
+[4, 6, 0, 0, 0, 255, 201, 223],
+[5, 6, 0, 0, 0, 255, 200, 14],
+[6, 6, 0, 0, 0, 255, 200, 61],
+[7, 6, 0, 0, 0, 255, 201, 236],
+[8, 6, 0, 0, 0, 255, 201, 19]]
 
-def connected(client):
-    print("E ket noi thanh cong Adafruit roi do ...")
-    client.subscribe(AIO_FEED_ID)
+relay_OFF = [[1, 6, 0, 0, 0, 0, 137, 202],
+[2, 6, 0, 0, 0, 0, 137, 249],
+[3, 6, 0, 0, 0, 0, 136, 40],
+[4, 6, 0, 0, 0, 0, 137, 159],
+[5, 6, 0, 0, 0, 0, 136, 78],
+[6, 6, 0, 0, 0, 0, 136, 125],
+[7, 6, 0, 0, 0, 0, 137, 172],
+[8, 6, 0, 0, 0, 0, 137, 83]]
 
-def subscribe(client, userdata , mid , granted_qos):
-    print("Sub Successful ...")
-
-
-def disconnected(client):
-    print("DISCONECT ...")
-    sys.exit(1)
-
-
-def message(client, feed_id, payload):
-    # if feed_id == AIO_FEED_ID[2]:
-    #     print("Turn relay 1:" + payload)
-    #     #ser.write((payload+'#').encode('UTF-8'))
-    print("Data come")
-    print("Turn relay 1:" + payload)
-    if feed_id == AIO_FEED_ID[3]:
-        print("Data Temp :" + payload)
-        #ser.write((str(payload) + "#").encode())
-
-
-client = MQTTClient(AIO_USERNAME, AIO_KEY)
-client.on_connect = connected
-client.on_message = message
-client.on_disconnect = disconnected
-client.on_subscribe = subscribe
-client.connect()
-client.loop_background()
+def relayController():
+    number = int(input("Enter relay number: "))
+    state = int(input("Enter state: "))
+    if state == 1:
+        ser.write(relay_ON[number - 1])                                                                                                         
+        print(serial_read_data(ser)) 
+    else :
+        ser.write(relay_OFF[number - 1])                                                                                                         
+        print(serial_read_data(ser)) 
 
 while True:
-    # print("TEST MOTOR")
-    # setDevice1(True)
-    # time.sleep(2)
-    # setDevice1(False)
-    # time.sleep(2)
-    
-    # setDevice2(True)
-    # time.sleep(2)
-    # setDevice2(False)
-    # time.sleep(2)
-    # print("TEST SENSOR")
-    # print("Temp :",readTemperature())
-    # print(readMoisture())
-    # print(ser.read())
-    # time.sleep(2)
-
-    print("TEST DISTANCE")
-    setDevice2(True)
+    # try:
+    #     number = int(input("Enter relay number"))
+    # except ValueError:
+    #     print("Invalid number")
+    relayController()
     time.sleep(2)
+
+    # ser.write(distance2_ON)                                                                                                         
+    # print(serial_read_data(ser))
+    # setDevice1(relay1_ON)                                                                                                
+    # time.sleep(2)                                                                                                                
+    # ser.write(relay1_OFF)                                                                                                        
+    # print(serial_read_data(ser))   
+    # setDevice1(relay1_OFF)                                                                                              
+    # time.sleep(2)
