@@ -7,14 +7,14 @@ class Task:
     pTask = None
     Delay = 0
     Period = 0
-    RunMe = 0
+    RunMe = 0                   # set state of sched: 1 -> 0 -> Run pTask (pTask is a pointer function)
     TaskID = -1
 
 class Scheduler:
-    TICK = 100
-    SCH_MAX_TASKS = 40
-    SCH_tasks_G = []
-    current_index_task = 0
+    TICK = 100                  
+    SCH_MAX_TASKS = 40          
+    SCH_tasks_G = []            # List task (type list)
+    current_index_task = 0      # total number task current 
 
     def __int__(self):
         return
@@ -46,6 +46,12 @@ class Scheduler:
                 self.SCH_tasks_G[i].pTask()
 
     def SCH_Delete(self, aTask):
+        # TODO
+        if aTask in self.SCH_tasks_G:
+            self.SCH_tasks_G.remove(aTask)
+            self.current_index_task -= 1
+        else:
+            print("Task not found in the scheduler!")
         return
 
     def SCH_GenerateID(self):
