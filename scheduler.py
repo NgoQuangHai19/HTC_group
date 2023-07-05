@@ -33,11 +33,17 @@ class Scheduler:
 
     def SCH_Update(self):
         for i in range(0, len(self.SCH_tasks_G)):
-            if self.SCH_tasks_G[i].Delay > 0:
-                self.SCH_tasks_G[i].Delay -= 1
+            if self.SCH_tasks_G[i].Period == 0:  
+                self.SCH_Delete(self.SCH_tasks_G[i])
+                self.SCH_Update()
+                break
             else:
-                self.SCH_tasks_G[i].Delay = self.SCH_tasks_G[i].Period
-                self.SCH_tasks_G[i].RunMe += 1
+                if self.SCH_tasks_G[i].Delay > 0:
+                    self.SCH_tasks_G[i].Delay -= 1
+                else:
+                    self.SCH_tasks_G[i].Delay = self.SCH_tasks_G[i].Period
+                    self.SCH_tasks_G[i].RunMe += 1
+                    
 
     def SCH_Dispatch_Tasks(self):
         for i in range(0, len(self.SCH_tasks_G)):
@@ -46,13 +52,13 @@ class Scheduler:
                 self.SCH_tasks_G[i].pTask()
 
     def SCH_Delete(self, aTask):
-        # TODO
         if aTask in self.SCH_tasks_G:
             self.SCH_tasks_G.remove(aTask)
-            self.current_index_task -= 1
-        else:
-            print("Task not found in the scheduler!")
-        return
+            self.current_index_task -= 1    
 
     def SCH_GenerateID(self):
         return -1
+
+    def SCH_Print(self):
+        for i in range(0, len(self.SCH_tasks_G)):
+            print(self.SCH_tasks_G[i].TaskID)
