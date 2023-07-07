@@ -15,6 +15,39 @@ def getPort():
             commPort = splitPort[0]
     return commPort
 
+portName = getPort()
+print("portName:",portName)
+if portName != "None":
+    ser = serial.Serial(port=portName, baudrate=9600)
+
+
+
+
+relay1_ON = [0, 6, 0, 0, 0, 255, 200, 91]
+relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
+def setDevice1(state):
+    serial_read_data(ser)
+    #print(ser)
+    if state == True:
+        ser.write(relay1_ON)
+        # client.publish(AIO_FEED_ID[2],1)
+    else:
+        ser.write(relay1_OFF)
+        # client.publish(AIO_FEED_ID[2],0)
+
+
+relay2_ON = [15, 6, 0, 0, 0, 255, 200, 164]
+relay2_OFF = [15, 6, 0, 0, 0, 0, 136, 228]
+def setDevice2(state):
+    serial_read_data(ser)
+    #print(ser)
+    if state == True:
+        ser.write(relay2_ON)
+        #client.publish(AIO_FEED_ID[3],1)
+    else:
+        ser.write(relay2_OFF)
+        #client.publish(AIO_FEED_ID[3],0)
+
 def serial_read_data(ser):
     bytesToRead = ser.inWaiting()
     if bytesToRead > 0:
@@ -28,32 +61,6 @@ def serial_read_data(ser):
         else:
             return -1
     return 0
-
-def setDevice1(state):
-    serial_read_data(ser)
-    #print(ser)
-    if state == True:
-        ser.write(relay1_ON)
-        # client.publish(AIO_FEED_ID[2],1)
-    else:
-        ser.write(relay1_OFF)
-        # client.publish(AIO_FEED_ID[2],0)
-
-portName = getPort()
-print("portName:",portName)
-if portName != "None":
-    ser = serial.Serial(port=portName, baudrate=9600)
-
-relay1_ON = [1, 6, 0, 0, 0, 255, 201, 138]
-relay1_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
-
-# relay6_ON = [1, 6, 0, 0, 0, 255, 201, 138]
-# relay6_OFF = [1, 6, 0, 0, 0, 0, 137, 202]
-
-distance1_ON = [9, 3, 0, 5, 0, 1, 149, 67]
-distance2_ON = [12, 3, 0, 5, 0, 1, 149, 22]
-# distance2_OFF = [12, 6, 0, 8, 0, 9, 201, 19]
-
 
 
 def relayController(number,state):
