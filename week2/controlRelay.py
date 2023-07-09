@@ -22,10 +22,9 @@ if portName != "None":
 
 
 
-
-relay1_ON = [0, 6, 0, 0, 0, 255, 200, 91]
-relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
 def setDevice1(state):
+    relay1_ON = [0, 6, 0, 0, 0, 255, 200, 91]
+    relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
     serial_read_data(ser)
     #print(ser)
     if state == True:
@@ -36,9 +35,9 @@ def setDevice1(state):
         # client.publish(AIO_FEED_ID[2],0)
 
 
-relay2_ON = [15, 6, 0, 0, 0, 255, 200, 164]
-relay2_OFF = [15, 6, 0, 0, 0, 0, 136, 228]
 def setDevice2(state):
+    relay2_ON = [15, 6, 0, 0, 0, 255, 200, 164]
+    relay2_OFF = [15, 6, 0, 0, 0, 0, 136, 228]
     serial_read_data(ser)
     #print(ser)
     if state == True:
@@ -81,11 +80,11 @@ def relayController(number,state):
                 [6, 6, 0, 0, 0, 0, 136, 125],
                 [7, 6, 0, 0, 0, 0, 137, 172],
                 [8, 6, 0, 0, 0, 0, 137, 83]]
-    if state == 1:
-        ser.write(relay_ON[number - 1])                                                                                                         
+    if state == 0:
+        ser.write(relay_OFF[number - 1])                                                                                                         
         print(serial_read_data(ser)) 
     else :
-        ser.write(relay_OFF[number - 1])                                                                                                         
+        ser.write(relay_ON[number - 1])                                                                                                         
         print(serial_read_data(ser)) 
 
 def getvalueDistance(number):
@@ -99,10 +98,3 @@ def getvalueDistance(number):
         print("The input gate is entered incorrectly")
 
 
-
-
-
-
-while True:
-    ##
-    print(...)
