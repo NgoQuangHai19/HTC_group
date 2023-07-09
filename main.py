@@ -1,11 +1,8 @@
 import sys
 import time
-from scheduler import *
-from physical import *
-from week2 import *
-from task1 import * 
-from task2 import * 
-from task3 import * 
+
+
+####
 
 
 scheduler = Scheduler()

@@ -38,25 +38,15 @@ class Scheduler:
             else:
                 self.SCH_tasks_G[i].Delay = self.SCH_tasks_G[i].Period
                 self.SCH_tasks_G[i].RunMe += 1
- 
+
     def SCH_Dispatch_Tasks(self):
-        deleteArr=[]
         for i in range(0, len(self.SCH_tasks_G)):
             if self.SCH_tasks_G[i].RunMe > 0:
                 self.SCH_tasks_G[i].RunMe -= 1
                 self.SCH_tasks_G[i].pTask()
-                if self.SCH_tasks_G[i].Period == 0 :
-                    deleteArr.append(self.SCH_tasks_G[i]);
-                    # self.SCH_Delete(self.SCH_tasks_G[i])
-                    # self.SCH_Dispatch_Tasks()
-                    # break        
-        for i in range(0,len(deleteArr)):
-            self.SCH_Delete(deleteArr[i])
-            self.SCH_MAX_TASKS += 1
 
     def SCH_Delete(self, aTask):
-            self.SCH_tasks_G.remove(aTask)
-            print("A task have been removed.")
+        return
 
     def SCH_GenerateID(self):
         return -1
