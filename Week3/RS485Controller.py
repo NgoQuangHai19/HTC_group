@@ -1,5 +1,5 @@
 import time
-import serial.tools.list_ports
+import serial.tools.list_ports 
 
 class RS485Controller:
     def __init__(self):
