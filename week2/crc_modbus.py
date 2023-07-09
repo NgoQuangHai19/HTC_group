@@ -1,4 +1,4 @@
-input = ["0C0300030001"]
+input = ["0C0300050001"]
 def modbusCrc(msg:str) -> int:
     crc = 0xFFFF
     for n in range(len(msg)):
