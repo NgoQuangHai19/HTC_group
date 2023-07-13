@@ -1,8 +1,9 @@
 from Adafruit_IO import MQTTClient
 import  sys
+import time
 
 class Adafruit:
-    def __init__(self,username,key,feed_id_list):
+    def __init__(self, username, key, feed_id_list):
         self.username = username
         self.feed_id_list = feed_id_list
         self.key = key
@@ -10,9 +11,11 @@ class Adafruit:
 
     def connected(self, client):
         print("Ket noi thanh cong Adafruit..")
-        client.subscribe(self.feed_id_list)
+        for feed_id in self.feed_id_list:
+            print("Subscribe to " + feed_id)
+            client.subscribe(feed_id)
 
-    def subscribe(client, userdata , mid , granted_qos):
+    def subscribe(self, client, userdata , mid , granted_qos):
         print("Sub Successful ...")
 
     def disconnected(client):
@@ -34,4 +37,10 @@ class Adafruit:
         self.mqtt_client.on_subscribe = self.subscribe
         self.mqtt_client.connect()
         self.mqtt_client.loop_background()
-         
+
+AIO_FEED_ID = ["ttnt-humi", "ttnt-temp", "ttnt-relay1"]
+AIO_USERNAME = "haingoquang"
+AIO_KEY = "aio_TKtY66uILjbvCdFAZpyfJ7hcgxu8"
+
+# client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
+# client.connect()          
