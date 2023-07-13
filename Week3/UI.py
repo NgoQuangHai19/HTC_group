@@ -17,71 +17,94 @@ def control_relay(number, state):
 def measure_distance(number):
     distance = ser.getvalueDistance(number)
     print("Khoảng cách nút {}: {}".format(number, distance))
+    value_text.delete(1.0, tk.END)
+    value_text.insert(tk.END, distance)
 
 # Tạo giao diện người dùng
 root = tk.Tk()
 root.title("Control Panel")
 root.geometry("400x300")
 
-# Nút điều khiển relay 1-6
-relay_frame = tk.Frame(root)
-relay_frame.pack(pady=10)
+# Nút điều khiển relay 1-3
+relay_frame1 = tk.Frame(root)
+relay_frame1.pack(pady=10)
 
-for i in range(6):
-    button_frame = tk.Frame(relay_frame)
-    button_frame.pack(pady=5)
+for i in range(3):
+    relay_frame = tk.Frame(relay_frame1)
+    relay_frame.pack(side=tk.LEFT, padx=5)
 
-    label = tk.Label(button_frame, text="Relay {}".format(i+1))
-    label.pack()
+    relay_label = tk.Label(relay_frame, text="Relay {}".format(i+1))
+    relay_label.pack()
 
-    on_button = tk.Button(button_frame, text="ON", width=5, command=lambda num=i+1: control_relay(num, 1))
-    on_button.pack(side=tk.LEFT, padx=5)
+    on_button = tk.Button(relay_frame, text="ON", width=5, command=lambda num=i+1: control_relay(num, 1))
+    on_button.pack(pady=5)
 
-    off_button = tk.Button(button_frame, text="OFF", width=5, command=lambda num=i+1: control_relay(num, 0))
-    off_button.pack(side=tk.LEFT)
+    off_button = tk.Button(relay_frame, text="OFF", width=5, command=lambda num=i+1: control_relay(num, 0))
+    off_button.pack(pady=5)
 
-# Nút điều khiển relay 7, 8, 10, 11
+# Nút điều khiển relay 4-6
 relay_frame2 = tk.Frame(root)
 relay_frame2.pack(pady=10)
 
+for i in range(3, 6):
+    relay_frame = tk.Frame(relay_frame2)
+    relay_frame.pack(side=tk.LEFT, padx=5)
+
+    relay_label = tk.Label(relay_frame, text="Relay {}".format(i+1))
+    relay_label.pack()
+
+    on_button = tk.Button(relay_frame, text="ON", width=5, command=lambda num=i+1: control_relay(num, 1))
+    on_button.pack(pady=5)
+
+    off_button = tk.Button(relay_frame, text="OFF", width=5, command=lambda num=i+1: control_relay(num, 0))
+    off_button.pack(pady=5)
+
+# Nút điều khiển relay 7, 8, 10, 11
+relay_frame3 = tk.Frame(root)
+relay_frame3.pack(pady=10)
+
 for i in [7, 8, 10, 11]:
-    button_frame = tk.Frame(relay_frame2)
-    button_frame.pack(pady=5)
+    relay_frame = tk.Frame(relay_frame3)
+    relay_frame.pack(side=tk.LEFT, padx=5)
 
-    label = tk.Label(button_frame, text="Relay {}".format(i))
-    label.pack()
+    relay_label = tk.Label(relay_frame, text="Relay {}".format(i))
+    relay_label.pack()
 
-    on_button = tk.Button(button_frame, text="ON", width=5, command=lambda num=i: control_relay(num, 1))
-    on_button.pack(side=tk.LEFT, padx=5)
+    on_button = tk.Button(relay_frame, text="ON", width=5, command=lambda num=i: control_relay(num, 1))
+    on_button.pack(pady=5)
 
-    off_button = tk.Button(button_frame, text="OFF", width=5, command=lambda num=i: control_relay(num, 0))
-    off_button.pack(side=tk.LEFT)
+    off_button = tk.Button(relay_frame, text="OFF", width=5, command=lambda num=i: control_relay(num, 0))
+    off_button.pack(pady=5)
 
-# Nút đo khoảng cách 9, 12
-distance_frame = tk.Frame(root)
-distance_frame.pack(pady=10)
+# Nút điều khiển relay 9, 12
+relay_frame4 = tk.Frame(root)
+relay_frame4.pack(pady=10)
 
-button_frame = tk.Frame(distance_frame)
-button_frame.pack(pady=5)
+relay_frame_9 = tk.Frame(relay_frame4)
+relay_frame_9.pack(side=tk.LEFT, padx=5)
 
-distance_button_9 = tk.Button(button_frame, text="9", width=5, command=lambda: measure_distance(9))
-distance_button_9.pack(side=tk.LEFT, padx=5)
+relay_label_9 = tk.Label(relay_frame_9, text="Relay 9")
+relay_label_9.pack()
 
-distance_button_12 = tk.Button(button_frame, text="12", width=5, command=lambda: measure_distance(12))
-distance_button_12.pack(side=tk.LEFT)
+measure_button_9 = tk.Button(relay_frame_9, text="Measure", width=10, command=lambda: measure_distance(9))
+measure_button_9.pack(pady=5)
 
-# Hiển thị giá trị trả về của hàm getvalueDistance(number)
-value_frame = tk.Frame(root)
-value_frame.pack(pady=10)
+value_frame = tk.Frame(relay_frame4)
+value_frame.pack(side=tk.LEFT, padx=5)
 
-value_label = tk.Label(value_frame, text="Giá trị trả về")
-value_label.pack()
+value_label = tk.Label(value_frame, text="Value:")
+value_label.pack(side=tk.LEFT)
 
-value_text = tk.Text(value_frame, width=20, height=1)
-value_text.pack()
+value_text = tk.Text(value_frame, width=10, height=1)
+value_text.pack(side=tk.LEFT)
 
-def update_value_text(value):
-    value_text.delete(1.0, tk.END)
-    value_text.insert(tk.END, value)
+relay_frame_12 = tk.Frame(relay_frame4)
+relay_frame_12.pack(side=tk.LEFT, padx=5)
+
+relay_label_12 = tk.Label(relay_frame_12, text="Relay 12")
+relay_label_12.pack()
+
+measure_button_12 = tk.Button(relay_frame_12, text="Measure", width=10, command=lambda: measure_distance(12))
+measure_button_12.pack(pady=5)
 
 root.mainloop()
