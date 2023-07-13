@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from RS485Controller import RS485Controller
 import threading
+import time
 
 # Khởi tạo đối tượng RS485Controller
 ser = RS485Controller()
