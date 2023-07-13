@@ -107,9 +107,9 @@ def readMoisture():
     return serial_read_data(ser)
 
 ##Adafruit
-AIO_FEED_ID = ["moisture", "temp", "relay-1","relay-2"]
-AIO_USERNAME = "Thesis_SmartAgri"
-AIO_KEY = "aio_HQLV330frfpmBwzKI76YlI0Z1DYh"
+AIO_FEED_ID = ["ttnt-humi", "ttnt-temp", "ttnt-relay1"]
+AIO_USERNAME = "haingoquang"
+AIO_KEY = "aio_PJVh83RTKveh7Xabx6oudh5PoOgL"
 
 
 
