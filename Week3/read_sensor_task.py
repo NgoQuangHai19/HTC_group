@@ -22,12 +22,12 @@ class ReadSensorTask:
             print("Write relay 1")
         self.rs485.setDevice2(state)
 
-    def readValueDistance(self, number):
-        if number == 9:
-            print("Get value of distance sensor 9")
-        elif number == 12 :
-            print("Get value of distance sensor 12")
-        distance=self.rs485.getvalueDistance(number)
+    def readValueDistance(self):
+        # if number == 9:
+        #     print("Get value of distance sensor 9")
+        # elif number == 12 :
+        #     print("Get value of distance sensor 12")
+        distance=self.rs485.getvalueDistance(12)
         self.client.publish(AIO_FEED_ID[2],distance)
     
 #task1 = ReadSensorTask()
