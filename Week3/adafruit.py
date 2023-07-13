@@ -40,7 +40,7 @@ class Adafruit:
 
 AIO_FEED_ID = ["ttnt-humi", "ttnt-temp", "ttnt-relay1"]
 AIO_USERNAME = "haingoquang"
-AIO_KEY = "aio_UoDo99lF0TIMLJPr9nregCzcbPjV"
+AIO_KEY = "aio_yURU50EFkU0hRMevLDT6WTkMe62Q"
 
 # client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
 # client.connect()          
