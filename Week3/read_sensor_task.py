@@ -29,7 +29,7 @@ class ReadSensorTask:
         #     print("Get value of distance sensor 12")
         distance=self.rs485.getvalueDistance(12)
         print("Khoang cach la: ",distance)
-        #self.client.publish(AIO_FEED_ID[2],distance)
+        self.client.mqtt_client.publish(AIO_FEED_ID[2],distance)
     
 #task1 = ReadSensorTask()
 # while(True):
