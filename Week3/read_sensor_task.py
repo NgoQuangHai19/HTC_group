@@ -8,12 +8,12 @@ class ReadSensorTask:
         self.client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
         self.client.connect() 
         
-    def setDevice1(self, state):
-        if state == 1:
-            print("Read relay 1")
-        elif state == 0 :
-            print("Write relay 1")
-        self.rs485.setDevice1(state)
+    def setDevice1(self):
+        # if state == 1:
+        #     print("Read relay 1")
+        # elif state == 0 :
+        #     print("Write relay 1")
+        self.rs485.setDevice1(1)
     
     def setDevice2(self, state):
         if state == 1:
@@ -28,7 +28,8 @@ class ReadSensorTask:
         # elif number == 12 :
         #     print("Get value of distance sensor 12")
         distance=self.rs485.getvalueDistance(12)
-        self.client.publish(AIO_FEED_ID[2],distance)
+        print("Khoang cach la: ",distance)
+        #self.client.publish(AIO_FEED_ID[2],distance)
     
 #task1 = ReadSensorTask()
 # while(True):
