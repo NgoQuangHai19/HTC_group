@@ -47,7 +47,7 @@ class Scheduler:
                 self.SCH_tasks_G[i].RunMe -= 1
                 self.SCH_tasks_G[i].pTask()
                 if self.SCH_tasks_G[i].Period == 0 :
-                    deleteArr.append(self.SCH_tasks_G[i]);
+                    deleteArr.append(self.SCH_tasks_G[i])
                     # self.SCH_Delete(self.SCH_tasks_G[i])
                     # self.SCH_Dispatch_Tasks()
                     # break        
