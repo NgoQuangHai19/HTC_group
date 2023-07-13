@@ -12,7 +12,7 @@ def getPort():
         port = ports[i]
         strPort = str(port)
         print(strPort) # print(strPort)
-        if "FT232R USB UART" in strPort:
+        if "/dev/ttyAMA2" in strPort:
             splitPort = strPort.split(" ")
             print("PortName:",strPort)
             commPort = splitPort[0]
@@ -107,9 +107,9 @@ def readMoisture():
     return serial_read_data(ser)
 
 ##Adafruit
-AIO_FEED_ID = ["moisture", "temp", "relay-1","relay-2"]
-AIO_USERNAME = "Thesis_SmartAgri"
-AIO_KEY = "aio_HQLV330frfpmBwzKI76YlI0Z1DYh"
+AIO_FEED_ID = ["ttnt-humi", "ttnt-temp", "ttnt-relay1"]
+AIO_USERNAME = "haingoquang"
+AIO_KEY = "aio_uZjH00KzIDHZ6SLXIhg8uWZwtfDK"
 
 
 
@@ -159,8 +159,7 @@ while True:
     # time.sleep(2)
     # setDevice2(False)
     # time.sleep(2)
-    print("TEST SENSOR")
-    print("Temp :",readTemperature())
+    setDevice1(True)
     #print(readMoisture())
    # print(ser.read())
     time.sleep(2)
