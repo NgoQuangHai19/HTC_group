@@ -40,12 +40,12 @@ class Adafruit:
 
 AIO_FEED_ID = ["ttnt-humi", "ttnt-temp", "ttnt-relay1"]
 AIO_USERNAME = "haingoquang"
-AIO_KEY = "aio_Yqzb484TNLewpjXI4aOnS6DA7psh"
+AIO_KEY = "aio_PJVh83RTKveh7Xabx6oudh5PoOgL"
 
-while(True) :
-    client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
-    client.connect()
-    time.sleep(2) 
+# while(True) :
+#     client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
+#     client.connect()
+#     time.sleep(2) 
 
 # client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
 # client.connect()          
