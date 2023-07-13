@@ -109,7 +109,7 @@ def readMoisture():
 ##Adafruit
 AIO_FEED_ID = ["ttnt-humi", "ttnt-temp", "ttnt-relay1"]
 AIO_USERNAME = "haingoquang"
-AIO_KEY = "aio_PJVh83RTKveh7Xabx6oudh5PoOgL"
+AIO_KEY = "aio_uZjH00KzIDHZ6SLXIhg8uWZwtfDK"
 
 
 
