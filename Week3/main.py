@@ -19,11 +19,11 @@ task1 = ReadSensorTask(ser)
 task2 = ReadSensorTask(ser)
 
 scheduler.SCH_Add_Task(task1.setDevice1On, 1000, 3000)
-scheduler.SCH_Add_Task(task2.setDevice1On, 2000, 3000)
+scheduler.SCH_Add_Task(task2.setDevice1Off, 2000, 3000)
 
 
 while True:
     scheduler.SCH_Update()
     scheduler.SCH_Dispatch_Tasks()
-    time.sleep(1)
+    time.sleep(0.2)
 
