@@ -17,7 +17,7 @@ scheduler.SCH_Init()
 
 task1 = ReadSensorTask(ser)
 
-scheduler.SCH_Add_Task(task1.readValueDistance(9), 1000, 3000)
+scheduler.SCH_Add_Task(task1.setDevice1, 1000, 3000)
 
 
 while True:
