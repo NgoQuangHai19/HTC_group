@@ -23,7 +23,8 @@ def measure_distance(number):
 # Tạo giao diện người dùng
 root = tk.Tk()
 root.title("Control Panel")
-root.geometry("1200x800")
+root.geometry("400x300")
+root.attributes("-fullscreen", True)  # Thiết lập cửa sổ thành chế độ toàn màn hình
 
 # Nút điều khiển relay 1-3
 relay_frame1 = tk.Frame(root)
