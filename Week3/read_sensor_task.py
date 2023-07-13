@@ -8,12 +8,19 @@ class ReadSensorTask:
         self.client=Adafruit(AIO_USERNAME, AIO_KEY, AIO_FEED_ID)
         self.client.connect() 
         
-    def setDevice1(self):
+    def setDevice1On(self):
         # if state == 1:
         #     print("Read relay 1")
         # elif state == 0 :
         #     print("Write relay 1")
         self.rs485.setDevice1(1)
+
+    def setDevice1Off(self):
+        # if state == 1:
+        #     print("Read relay 1")
+        # elif state == 0 :
+        #     print("Write relay 1")
+        self.rs485.setDevice1(0)
     
     def setDevice2(self, state):
         if state == 1:

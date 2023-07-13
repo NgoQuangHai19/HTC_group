@@ -25,13 +25,16 @@ class RS485Controller:
     def setDevice1(self, state):
         relay1_ON = [0, 6, 0, 0, 0, 255, 200, 91]
         relay1_OFF = [0, 6, 0, 0, 0, 0, 136, 27]
-        self.serial_read_data()
+        
         if state:
+            print("Bat relay 1")
             self.ser.write(relay1_ON)
             # client.publish(AIO_FEED_ID[2], 1)
         else:
+            print("Tat relay 1")
             self.ser.write(relay1_OFF)
             # client.publish(AIO_FEED_ID[2], 0)
+        self.serial_read_data()
     
     def setDevice2(self, state):
         relay2_ON = [15, 6, 0, 0, 0, 255, 200, 164]
