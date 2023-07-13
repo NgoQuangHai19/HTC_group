@@ -13,14 +13,18 @@ class ReadSensorTask:
         #     print("Read relay 1")
         # elif state == 0 :
         #     print("Write relay 1")
-        self.rs485.setDevice1(1)
+        state=self.rs485.setDevice1(1)
+        print("Trang thai cua relay: ",state)
+        #self.client.mqtt_client.publish(AIO_FEED_ID[1],state)
 
     def setDevice1Off(self):
         # if state == 1:
         #     print("Read relay 1")
         # elif state == 0 :
         #     print("Write relay 1")
-        self.rs485.setDevice1(0)
+        state=self.rs485.setDevice1(1)
+        print("Trang thai cua relay: ",state)
+        #self.client.mqtt_client.publish(AIO_FEED_ID[1],state)
     
     def setDevice2(self, state):
         if state == 1:
