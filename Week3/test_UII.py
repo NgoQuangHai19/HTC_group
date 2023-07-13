@@ -30,6 +30,7 @@ def update_values():
     while True:
         measure_distance(9)
         measure_distance(12)
+        root.update()  # Cập nhật lại giao diện
         time.sleep(15)
 
 # Tạo giao diện người dùng
