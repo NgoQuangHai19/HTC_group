@@ -16,13 +16,13 @@ class Main_UI:
         self.off = PhotoImage(file="Images\off2.png")
 
         self.window.attributes('-fullscreen', True)
-        self.window.title("IotGateway UI")
+        self.window.title("Control Panel")
         screen_width = self.window.winfo_screenwidth()
         screen_height = self.window.winfo_screenheight()
         print("Size = ", screen_width, screen_height)
 
         
-        self.intro = tk.Label(text="Control Pannel",
+        self.intro = tk.Label(text="Control Panel",
                               fg="#000",
                               justify=CENTER,
                               font="Helvetica 50 bold")
