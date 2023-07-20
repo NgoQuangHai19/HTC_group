@@ -6,7 +6,7 @@ from RS485Controller import RS485Controller
 import os
 if os.environ.get('DISPLAY','') == '':
     print('no display found. Using non-interactive Agg backend')
-    
+
 class Main_UI:
     dataModel = None
 
@@ -15,8 +15,8 @@ class Main_UI:
         print("Init the UI!!")
         self.is_on = [False, False, False, False, False, False, False, False]
         self.window = tk.Tk()
-        self.on = PhotoImage(file="Images\on2.png")
-        self.off = PhotoImage(file="Images\off2.png")
+        self.on = PhotoImage(file="on2.png")
+        self.off = PhotoImage(file="off2.png")
 
         self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
