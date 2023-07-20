@@ -3,7 +3,10 @@ from tkinter import *
 import time
 from PIL import Image
 from RS485Controller import RS485Controller
-
+import os
+if os.environ.get('DISPLAY','') == '':
+    print('no display found. Using non-interactive Agg backend')
+    
 class Main_UI:
     dataModel = None
 
