@@ -1,137 +1,156 @@
 import tkinter as tk
-from tkinter import ttk
-from RS485Controller import RS485Controller
-import threading
+from tkinter import *
 import time
+from PIL import Image
+from RS485Controller import RS485Controller
 
-# Khởi tạo đối tượng RS485Controller
-ser = RS485Controller()
+class Main_UI:
+    dataModel = None
 
-# Hàm điều khiển relay
-def control_relay(number, state):
-    if state == 1:
-        ser.relayController(number, 1)
-        print("Relay {} is ON".format(number))
-    elif state == 0:
-        ser.relayController(number, 0)
-        print("Relay {} is OFF".format(number))
+    def __init__(self,data):
+        self.dataModel = data
+        print("Init the UI!!")
+        self.is_on = [False, False, False, False, False, False, False, False]
+        self.window = tk.Tk()
+        self.on = PhotoImage(file="Images\on2.png")
+        self.off = PhotoImage(file="Images\off2.png")
 
-# Hàm đo khoảng cách
-def measure_distance(number):
-    distance = ser.getvalueDistance(number)
-    print("Khoảng cách nút {}: {}".format(number, distance))
-    if number == 9:
-        relay_9_value.set(distance)
-    elif number == 12:
-        relay_12_value.set(distance)
+        self.window.attributes('-fullscreen', True)
+        self.window.title("IotGateway UI")
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+        print("Size = ", screen_width, screen_height)
 
-# Hàm cập nhật giá trị của Relay 9 và 12
-def update_values():
-    while True:
-        measure_distance(9)
-        measure_distance(12)
-        root.update()  # Cập nhật lại giao diện
-        time.sleep(15)
+        
+        self.intro = tk.Label(text="Control Pannel",
+                              fg="#000",
+                              justify=CENTER,
+                              font="Helvetica 50 bold")
+        self.intro.place(x=screen_width/3 , y=0, width=screen_width/3, height=100)
 
-# Tạo giao diện người dùng
-root = tk.Tk()
-root.title("Control Panel")
+        self.button1 = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(1))
+        self.button1.place(x=screen_width/4 + 55 , y=210)
+        self.Relay1 = Label(self.window, text="Relay 1",fg="#000", font= "Helvetica 50 bold")
+        self.Relay1.place(x=55, y=210, width=screen_width/4, height=100)
 
-# Lấy kích thước của màn hình
-screen_width = root.winfo_screenwidth()
-screen_height = root.winfo_screenheight()
+        self.button2 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(2))
+        self.button2.place(x=3* screen_width / 4 + 55, y=210)
+        self.Relay2 = Label(self.window, text="Relay 2", fg="#000", font="Helvetica 50 bold")
+        self.Relay2.place(x=2* screen_width / 4 + 55, y=210, width=screen_width / 4, height=100)
 
-# Thiết lập kích thước và vị trí cho cửa sổ
-window_width = int(screen_width / 2)
-window_height = int(screen_height / 2)
-window_x = int((screen_width - window_width) / 2)
-window_y = int((screen_height - window_height) / 2)
-root.geometry(f"{window_width}x{window_height}+{window_x}+{window_y}")
+        self.button3 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(3))
+        self.button3.place(x=screen_width / 4 + 55, y=310)
+        self.Relay3 = Label(self.window, text="Relay 3", fg="#000", font="Helvetica 50 bold")
+        self.Relay3.place(x=55, y=310, width=screen_width / 4, height=100)
 
-# Nút điều khiển relay 1-3
-relay_frame1 = ttk.Frame(root)
-relay_frame1.pack(pady=10)
+        self.button4 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(4))
+        self.button4.place(x=3*screen_width / 4 + 55, y=310)
+        self.Relay4 = Label(self.window, text="Relay 4", fg="#000", font="Helvetica 50 bold")
+        self.Relay4.place(x=2*screen_width / 4 + 55, y=310, width=screen_width / 4, height=100)
 
-for i in range(3):
-    relay_frame = ttk.Frame(relay_frame1)
-    relay_frame.pack(side=tk.LEFT, padx=10, pady=10)
+        self.button5 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(5))
+        self.button5.place(x=screen_width / 4 + 55, y=410)
+        self.Relay5 = Label(self.window, text="Relay 5", fg="#000", font="Helvetica 50 bold")
+        self.Relay5.place(x=55, y=410, width=screen_width / 4, height=100)
 
-    relay_label = ttk.Label(relay_frame, text="Relay {}".format(i+1))
-    relay_label.pack()
+        self.button6 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(6))
+        self.button6.place(x=3*screen_width / 4 + 55, y=410)
+        self.Relay6 = Label(self.window, text="Relay 6", fg="#000", font="Helvetica 50 bold")
+        self.Relay6.place(x=2*screen_width / 4 + 55, y=410, width=screen_width / 4, height=100)
 
-    on_button = ttk.Button(relay_frame, text="ON", width=5, command=lambda num=i+1: control_relay(num, 1))
-    on_button.pack(pady=5)
+        self.button7 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(7))
+        self.button7.place(x=screen_width / 4 + 55, y=510)
+        self.Relay7 = Label(self.window, text="Relay 7", fg="#000", font="Helvetica 50 bold")
+        self.Relay7.place(x=55, y=510, width=screen_width / 4, height=100)
 
-    off_button = ttk.Button(relay_frame, text="OFF", width=5, command=lambda num=i+1: control_relay(num, 0))
-    off_button.pack(pady=5)
+        self.button8 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(8))
+        self.button8.place(x=3*screen_width / 4 + 55, y=510)
+        self.Relay8 = Label(self.window, text="Relay 8", fg="#000", font="Helvetica 50 bold")
+        self.Relay8.place(x=2*screen_width / 4 + 55, y=510, width=screen_width / 4, height=100)
 
-# Nút điều khiển relay 4-6
-relay_frame2 = ttk.Frame(root)
-relay_frame2.pack(pady=10)
 
-for i in range(3, 6):
-    relay_frame = ttk.Frame(relay_frame2)
-    relay_frame.pack(side=tk.LEFT, padx=10, pady=10)
+        self.labelDistance1 = tk.Label(text="Distance1",
+                                        fg="#000",
+                                        font="Helvetica 50 bold")
 
-    relay_label = ttk.Label(relay_frame, text="Relay {}".format(i+1))
-    relay_label.pack()
+        self.labelDistance1.place(x=30, y=610, width=screen_width / 3, height=100)
 
-    on_button = ttk.Button(relay_frame, text="ON", width=5, command=lambda num=i+1: control_relay(num, 1))
-    on_button.pack(pady=5)
 
-    off_button = ttk.Button(relay_frame, text="OFF", width=5, command=lambda num=i+1: control_relay(num, 0))
-    off_button.pack(pady=5)
+        self.labelDistance1Value = tk.Label(text="2000",
+                                           fg="#000",
+                                           font="Helvetica 50 bold")
 
-# Nút điều khiển relay 7, 8
-relay_frame3 = ttk.Frame(root)
-relay_frame3.pack(pady=10)
+        self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=610, width=screen_width / 3, height=100)
 
-for i in [7, 8]:
-    relay_frame = ttk.Frame(relay_frame3)
-    relay_frame.pack(side=tk.LEFT, padx=10, pady=10)
+        self.labelDistance1Unit = tk.Label(text="mm",
+                                           fg="#000",
+                                           font="Helvetica 50 bold")
 
-    relay_label = ttk.Label(relay_frame, text="Relay {}".format(i))
-    relay_label.pack()
+        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=610, width=screen_width / 4, height=100)
 
-    on_button = ttk.Button(relay_frame, text="ON", width=5, command=lambda num=i: control_relay(num, 1))
-    on_button.pack(pady=5)
+        self.labelDistance2 = tk.Label(text="Distance2",
+                                       fg="#000",
+                                       font="Helvetica 50 bold")
 
-    off_button = ttk.Button(relay_frame, text="OFF", width=5, command=lambda num=i: control_relay(num, 0))
-    off_button.pack(pady=5)
+        self.labelDistance2.place(x=30, y=710, width=screen_width / 3, height=100)
 
-# Nút điều khiển relay 9, 12
-relay_frame4 = ttk.Frame(root)
-relay_frame4.pack(pady=10)
 
-relay_frame_9 = ttk.Frame(relay_frame4)
-relay_frame_9.pack(side=tk.LEFT, padx=10, pady=10)
+        self.labelDistance2Value = tk.Label(text="2000",
+                                            fg="#000",
+                                            font="Helvetica 50 bold") 
 
-relay_label_9 = ttk.Label(relay_frame_9, text="Relay 9")
-relay_label_9.pack()
+        self.labelDistance2Value.place(x=2*screen_width / 4 - 50, y=710, width=screen_width / 3, height=100)
 
-measure_button_9 = ttk.Button(relay_frame_9, text="Measure", width=10, command=lambda: measure_distance(9))
-measure_button_9.pack(pady=5)
+        self.labelDistance1Unit = tk.Label(text="mm",
+                                           fg="#000",
+                                           font="Helvetica 50 bold")
 
-relay_9_value = tk.StringVar()
-relay_9_label = ttk.Label(relay_frame_9, textvariable=relay_9_value)
-relay_9_label.pack()
+        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=710, width=screen_width / 4, height=100)
 
-relay_frame_12 = ttk.Frame(relay_frame4)
-relay_frame_12.pack(side=tk.LEFT, padx=10, pady=10)
+    def control_relay(self, number, state):
+        if state == 1:
+            self.dataModel.relayController(number, 1)
+            print("Relay {} is ON".format(number))
+        elif state == 0:
+            self.dataModel.relayController(number, 0)
+            print("Relay {} is OFF".format(number))
 
-relay_label_12 = ttk.Label(relay_frame_12, text="Relay 12")
-relay_label_12.pack()
+    def toggle_button_click(self, number):
+        if self.is_on[number - 1]:
+            self.UI_Set_Button_text(number, self.off)
+            self.is_on[number - 1] = False
+            self.control_relay(number, 0)
+        else:
+            self.UI_Set_Button_text(number, self.on)
+            self.is_on[number - 1] = True
+            self.control_relay(number, 1)
+    
+    def UI_Refresh(self):
+        self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
+        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(10))
 
-measure_button_12 = ttk.Button(relay_frame_12, text="Measure", width=10, command=lambda: measure_distance(12))
-measure_button_12.pack(pady=5)
+    def UI_Set_Value_Text(self, text_object, data):
+        text_object.config(text="%.2f" %data)
 
-relay_12_value = tk.StringVar()
-relay_12_label = ttk.Label(relay_frame_12, textvariable=relay_12_value)
-relay_12_label.pack()
+    def UI_Set_Button_text(self, number, data):
+        if number == 1:
+            self.button1.config(image= data)
+        elif number == 2:
+            self.button2.config(image= data)
+        elif number == 3:
+            self.button3.config(image= data)
+        elif number == 4:
+            self.button4.config(image= data)
+        elif number == 5:
+            self.button5.config(image= data)
+        elif number == 6:
+            self.button6.config(image= data)
+        elif number == 7:
+            self.button7.config(image= data)
+        elif number == 8:
+            self.button8.config(image= data)
 
-# Tạo luồng riêng để cập nhật giá trị của Relay 9 và 12
-update_thread = threading.Thread(target=update_values)
-update_thread.daemon = True
-update_thread.start()
+if __name__ == "__main__":
+    app = Main_UI(None)
+    app.window.mainloop()
 
-root.mainloop()
