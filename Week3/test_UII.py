@@ -6,14 +6,21 @@ from RS485Controller import RS485Controller
 
 class Main_UI:
     dataModel = None
+    numberButton = 8
+    
 
     def __init__(self,data):
         self.dataModel = data
         print("Init the UI!!")
-        self.is_on = [False, False, False, False, False, False, False, False]
+        
         self.window = tk.Tk()
-        self.on = PhotoImage(file="on2.png")
-        self.off = PhotoImage(file="off2.png")
+        self.on = PhotoImage(file="Week3\on2.png")
+        self.off = PhotoImage(file="Week3\off2.png")
+
+        self.is_on = [False, False, False, False, False, False, False, False]
+        self.on_button = []
+        for i in range(0, self.numberButton):
+            self.on_button.append(Button(self.window, bd=0, justify=RIGHT))
 
         self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
@@ -28,43 +35,43 @@ class Main_UI:
                               font="Helvetica 50 bold")
         self.intro.place(x=screen_width/3 , y=0, width=screen_width/3, height=100)
 
-        self.button1 = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(1))
-        self.button1.place(x=screen_width/4 + 55 , y=210)
+        self.on_button[0] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(1))
+        self.on_button[0].place(x=screen_width/4 + 55 , y=210)
         self.Relay1 = Label(self.window, text="Relay 1",fg="#000", font= "Helvetica 50 bold")
         self.Relay1.place(x=55, y=210, width=screen_width/4, height=100)
 
-        self.button2 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(2))
-        self.button2.place(x=3* screen_width / 4 + 55, y=210)
+        self.on_button[1] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(2))
+        self.on_button[1].place(x=3* screen_width / 4 + 55, y=210)
         self.Relay2 = Label(self.window, text="Relay 2", fg="#000", font="Helvetica 50 bold")
         self.Relay2.place(x=2* screen_width / 4 + 55, y=210, width=screen_width / 4, height=100)
 
-        self.button3 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(3))
-        self.button3.place(x=screen_width / 4 + 55, y=310)
+        self.on_button[2] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(3))
+        self.on_button[2].place(x=screen_width / 4 + 55, y=310)
         self.Relay3 = Label(self.window, text="Relay 3", fg="#000", font="Helvetica 50 bold")
         self.Relay3.place(x=55, y=310, width=screen_width / 4, height=100)
 
-        self.button4 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(4))
-        self.button4.place(x=3*screen_width / 4 + 55, y=310)
+        self.on_button[3] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(4))
+        self.on_button[3].place(x=3*screen_width / 4 + 55, y=310)
         self.Relay4 = Label(self.window, text="Relay 4", fg="#000", font="Helvetica 50 bold")
         self.Relay4.place(x=2*screen_width / 4 + 55, y=310, width=screen_width / 4, height=100)
 
-        self.button5 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(5))
-        self.button5.place(x=screen_width / 4 + 55, y=410)
+        self.on_button[4] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(5))
+        self.on_button[4].place(x=screen_width / 4 + 55, y=410)
         self.Relay5 = Label(self.window, text="Relay 5", fg="#000", font="Helvetica 50 bold")
         self.Relay5.place(x=55, y=410, width=screen_width / 4, height=100)
 
-        self.button6 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(6))
-        self.button6.place(x=3*screen_width / 4 + 55, y=410)
+        self.on_button[5] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(6))
+        self.on_button[5].place(x=3*screen_width / 4 + 55, y=410)
         self.Relay6 = Label(self.window, text="Relay 6", fg="#000", font="Helvetica 50 bold")
         self.Relay6.place(x=2*screen_width / 4 + 55, y=410, width=screen_width / 4, height=100)
 
-        self.button7 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(7))
-        self.button7.place(x=screen_width / 4 + 55, y=510)
+        self.on_button[6] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(7))
+        self.on_button[6].place(x=screen_width / 4 + 55, y=510)
         self.Relay7 = Label(self.window, text="Relay 7", fg="#000", font="Helvetica 50 bold")
         self.Relay7.place(x=55, y=510, width=screen_width / 4, height=100)
 
-        self.button8 = Button(self.window, image=self.off, bd=0, command=lambda: self.toggle_button_click(8))
-        self.button8.place(x=3*screen_width / 4 + 55, y=510)
+        self.on_button[7] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(8))
+        self.on_button[7].place(x=3*screen_width / 4 + 55, y=510)
         self.Relay8 = Label(self.window, text="Relay 8", fg="#000", font="Helvetica 50 bold")
         self.Relay8.place(x=2*screen_width / 4 + 55, y=510, width=screen_width / 4, height=100)
 
@@ -128,27 +135,35 @@ class Main_UI:
     def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(10))
+        for i in range(0, len(self.is_on) - 1 ) :
+            if self.dataModel.BUTTON_STATE[i] == True:
+                self.on_button[i].config(image = self.on)
+                self.is_on=True
+            else:
+                self.on_button[i].config(image = self.off)
+                self.is_on=False
+        self.window.update()
 
     def UI_Set_Value_Text(self, text_object, data):
         text_object.config(text="%.2f" %data)
 
     def UI_Set_Button_text(self, number, data):
         if number == 1:
-            self.button1.config(image= data)
+            self.on_button[0].config(image= data)
         elif number == 2:
-            self.button2.config(image= data)
+            self.on_button[1].config(image= data)
         elif number == 3:
-            self.button3.config(image= data)
+            self.on_button[2].config(image= data)
         elif number == 4:
-            self.button4.config(image= data)
+            self.on_button[3].config(image= data)
         elif number == 5:
-            self.button5.config(image= data)
+            self.on_button[4].config(image= data)
         elif number == 6:
-            self.button6.config(image= data)
+            self.on_button[5].config(image= data)
         elif number == 7:
-            self.button7.config(image= data)
+            self.on_button[6].config(image= data)
         elif number == 8:
-            self.button8.config(image= data)
+            self.on_button[7].config(image= data)
 
 if __name__ == "__main__":
     app = Main_UI(None)
