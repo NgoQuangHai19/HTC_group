@@ -37,6 +37,7 @@ def setDevice1(state):
     else:
         ser.write(relay1_OFF)
         #client.publish(AIO_FEED_ID[2],0)
+    return ser
 
 
 relay2_ON = [15, 6, 0, 0, 0, 255, 200, 164]
@@ -159,8 +160,10 @@ while True:
     # time.sleep(2)
     # setDevice2(False)
     # time.sleep(2)
-    setDevice1(True)
-    serial_read_data(ser)
+
+    ser= setDevice1(True)
+    print(serial_read_data(ser))
+    ser= setDevice1(False)
     #print(readMoisture())
    # print(ser.read())
     time.sleep(2)
