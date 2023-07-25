@@ -32,7 +32,7 @@ class MonitoringTask:
     def getvalueDistance(self, number):
         distance=self.rs485.getvalueDistance(number)
         print("Khoang cach la: ",distance)
-        return distance
+        #return distance
         #self.client.mqtt_client.publish(AIO_FEED_ID[2],distance)
 
     def MonitoringTask_Run(self):
