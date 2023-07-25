@@ -171,5 +171,6 @@ class Main_UI:
 if __name__ == "__main__":
     ser=RS485Controller()
     app = Main_UI(ser)
+    app.UI_Refresh()
     app.window.mainloop()
 
