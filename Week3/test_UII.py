@@ -25,11 +25,15 @@ class Main_UI:
         for i in range(0, self.numberButton):
             self.on_button.append(Button(self.window, bd=0, justify=RIGHT))
 
-       #self.window.attributes('-fullscreen', True)
+        # self.window.attributes('-fullscreen', True)
+        # self.window.title("Control Panel")
+        # screen_width = self.window.winfo_screenwidth()
+        # screen_height = self.window.winfo_screenheight()
+        self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
-        self.window.geometry("600x1024")
-        screen_width = 600
-        screen_height = 1024
+        screen_width = 900
+        screen_height = 500
+
         print("Size = ", screen_width, screen_height)
 
         
