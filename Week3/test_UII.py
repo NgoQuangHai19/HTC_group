@@ -3,6 +3,9 @@ from tkinter import *
 import time
 from PIL import Image
 from RS485Controller import RS485Controller
+from read_sensor_task import *
+
+
 
 class Main_UI:
     dataModel = None
@@ -134,7 +137,7 @@ class Main_UI:
     
     def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
-        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(10))
+        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
         for i in range(0, len(self.is_on) - 1 ) :
             if self.dataModel.BUTTON_STATE[i] == True:
                 self.on_button[i].config(image = self.on)
@@ -165,8 +168,8 @@ class Main_UI:
         elif number == 8:
             self.on_button[7].config(image= data)
 
-if __name__ == "__main__":
-    ser=RS485Controller()
-    app = Main_UI(ser)
-    app.window.mainloop()
+# if __name__ == "__main__":
+#     ser=RS485Controller()
+#     app = Main_UI(ser)
+#     app.window.mainloop()
 
