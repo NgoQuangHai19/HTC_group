@@ -133,10 +133,8 @@ class Main_UI:
             self.control_relay(number, 1)
     
     def UI_Refresh(self):
-        dist9=self.dataModel.getvalueDistance(9)
-        dist10=self.dataModel.getvalueDistance(10)
-        self.UI_Set_Value_Text(self.labelDistance1Value, dist9)
-        self.UI_Set_Value_Text(self.labelDistance2Value, dist10)
+        self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
+        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(10))
         for i in range(0, len(self.is_on) - 1 ) :
             if self.dataModel.BUTTON_STATE[i] == True:
                 self.on_button[i].config(image = self.on)
@@ -168,6 +166,7 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 if __name__ == "__main__":
-    app = Main_UI(None)
+    ser=RS485Controller()
+    app = Main_UI(ser)
     app.window.mainloop()
 
