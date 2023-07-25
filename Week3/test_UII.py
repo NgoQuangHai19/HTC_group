@@ -31,8 +31,8 @@ class Main_UI:
         # screen_height = self.window.winfo_screenheight()
         self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
-        screen_width = 900
-        screen_height = 500
+        screen_width = 600
+        screen_height = 300
 
         print("Size = ", screen_width, screen_height)
 
