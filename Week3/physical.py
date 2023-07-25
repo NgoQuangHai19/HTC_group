@@ -140,13 +140,13 @@ def message(client, feed_id, payload):
         #ser.write((str(payload) + "#").encode())
 
 
-client = MQTTClient(AIO_USERNAME, AIO_KEY)
-client.on_connect = connected
-client.on_message = message
-client.on_disconnect = disconnected
-client.on_subscribe = subscribe
-client.connect()
-client.loop_background()
+# client = MQTTClient(AIO_USERNAME, AIO_KEY)
+# client.on_connect = connected
+# client.on_message = message
+# client.on_disconnect = disconnected
+# client.on_subscribe = subscribe
+# client.connect()
+# client.loop_background()
 
 while True:
     # print("TEST MOTOR")
