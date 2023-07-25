@@ -169,7 +169,7 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 # if __name__ == "__main__":
-#     ser=RS485Controller()
-#     app = Main_UI(ser)
+#    # ser=RS485Controller()
+#     app = Main_UI(None)
 #     app.window.mainloop()
 
