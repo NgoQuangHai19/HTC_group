@@ -150,21 +150,10 @@ def message(client, feed_id, payload):
 # client.loop_background()
 
 while True:
-    # print("TEST MOTOR")
-    # setDevice1(True)
-    # time.sleep(2)
-    # setDevice1(False)
-    # time.sleep(2)
     
-    # setDevice2(True)
-    # time.sleep(2)
-    # setDevice2(False)
-    # time.sleep(2)
-
-    ser= setDevice1(True)
+    ser.write(relay1_ON)
     print(serial_read_data(ser))
-    ser= setDevice1(False)
-    #print(readMoisture())
-   # print(ser.read())
+    ser.write(relay1_OFF)
+    print(serial_read_data(ser))
     time.sleep(2)
 
