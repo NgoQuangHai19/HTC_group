@@ -21,7 +21,7 @@ monitoring= MonitoringTask(m485, monitoring_timer)
 main_ui = Main_UI(monitoring)
 
 scheduler.SCH_Add_Task(main_ui.UI_Refresh, 1, 1)
-scheduler.SCH_Add_Task(monitoring_timer.Timer_Run, 1, 1000)
+scheduler.SCH_Add_Task(monitoring_timer.Timer_Run, 1, 100)
 #scheduler.SCH_Add_Task(monitoring.MonitoringTask_Run, 1, 100)
 
 
