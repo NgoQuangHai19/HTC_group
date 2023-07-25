@@ -105,7 +105,12 @@ class RS485Controller:
         return distance
         
 while(True):
-    ser=RS485Controller()
-    ser.getvalueDistance(9)
+    rs485=RS485Controller()
+    rs485.getvalueDistance(9)
+    rs485.getvalueDistance(12)
+    rs485.relayController(1,1)
     time.sleep(1)
+    rs485.relayController(1,0)
+    time.sleep(1)
+    
 
