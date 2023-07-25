@@ -27,9 +27,9 @@ class Main_UI:
 
        #self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
-        self.window.geometry("1024x600")
-        screen_width = 1024
-        screen_height = 600
+        self.window.geometry("600x1024")
+        screen_width = 600
+        screen_height = 1024
         print("Size = ", screen_width, screen_height)
 
         
