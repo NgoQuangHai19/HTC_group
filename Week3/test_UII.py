@@ -14,8 +14,8 @@ class Main_UI:
         print("Init the UI!!")
         
         self.window = tk.Tk()
-        self.on = PhotoImage(file="Week3\on2.png")
-        self.off = PhotoImage(file="Week3\off2.png")
+        self.on = PhotoImage(file="on2.png")
+        self.off = PhotoImage(file="off2.png")
 
         self.is_on = [False, False, False, False, False, False, False, False]
         self.on_button = []
