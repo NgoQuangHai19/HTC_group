@@ -3,10 +3,11 @@ import serial.tools.list_ports
 
 class RS485Controller:
     def __init__(self):
-        self.ser = None
-        self.portName = self.getPort()
-        if self.portName != "None":
-            self.ser = serial.Serial(port=self.portName, baudrate=9600)
+        self.ser = serial.Serial(port="/dev/ttyAMA2", baudrate=9600)
+        #self.ser = None
+        #self.portName = self.getPort()
+        # if self.portName != "None":
+        #     self.ser = serial.Serial(port=self.portName, baudrate=9600)
     
     def getPort(self):
         ports = serial.tools.list_ports.comports()
@@ -103,5 +104,8 @@ class RS485Controller:
             print("The input gate is entered incorrectly")
         return distance
         
-
+while(True):
+    ser=RS485Controller()
+    ser.getvalueDistance(9)
+    time.sleep(1)
 
