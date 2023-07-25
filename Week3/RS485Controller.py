@@ -48,10 +48,10 @@ class RS485Controller:
             self.ser.write(relay2_OFF)
             # client.publish(AIO_FEED_ID[3], 0)
     
-    def serial_read_data(self):
-        bytesToRead = self.ser.inWaiting()
+    def serial_read_data(self, ser):
+        bytesToRead = ser.inWaiting()
         if bytesToRead > 0:
-            out = self.ser.read(bytesToRead)
+            out = ser.read(bytesToRead)
             data_array = [b for b in out]
             print(data_array)
             if len(data_array) >= 7:
@@ -112,10 +112,10 @@ while(True):
     # rs485.getvalueDistance(9)
     # rs485.getvalueDistance(12)
     rs485.relayController(1,1)
-    print(rs485.serial_read_data())
+    print(rs485.serial_read_data(rs485.ser))
     time.sleep(1)
     rs485.relayController(1,0)
-    print(rs485.serial_read_data())
+    print(rs485.serial_read_data(rs485.ser))
     time.sleep(1)
     
 
