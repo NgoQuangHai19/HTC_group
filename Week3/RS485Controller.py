@@ -57,10 +57,13 @@ class RS485Controller:
             if len(data_array) >= 7:
                 array_size = len(data_array)
                 value = data_array[array_size - 4] * 256 + data_array[array_size - 3]
+                print("value : ",value)
                 return value
             else:
                 return -1
         return 0
+    
+    
     
     def relayController(self, number, state):
         relay_ON =  [[1, 6, 0, 0, 0, 255, 201, 138],
@@ -106,11 +109,13 @@ class RS485Controller:
         
 while(True):
     rs485=RS485Controller()
-    rs485.getvalueDistance(9)
-    rs485.getvalueDistance(12)
+    # rs485.getvalueDistance(9)
+    # rs485.getvalueDistance(12)
     rs485.relayController(1,1)
+    rs485.serial_read_data()
     time.sleep(1)
     rs485.relayController(1,0)
+    rs485.serial_read_data()
     time.sleep(1)
     
 
