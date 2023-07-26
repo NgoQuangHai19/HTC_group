@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import *
 import time
 from PIL import Image
-from RS485Controller import RS485Controller
+from RS485Controller import * 
 from read_sensor_task import *
 
 
@@ -140,17 +140,25 @@ class Main_UI:
             self.is_on[number - 1] = True
             self.control_relay(number, 1)
     
-    def UI_Refresh(self):
+    # def UI_Refresh(self):
+    #     self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
+    #     self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
+    #     # for i in range(0, self.numberButton - 1 ) :
+    #     #     if self.dataModel.BUTTON_STATE[i] == True:
+    #     #         self.on_button[i].config(image = self.on)
+    #     #         self.is_on=True
+    #     #     else:
+    #     #         self.on_button[i].config(image = self.off)
+    #     #         self.is_on=False
+    #     self.window.update()
+
+    def UI_Update(self):
+        # Update the UI components here
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
-        # for i in range(0, self.numberButton - 1 ) :
-        #     if self.dataModel.BUTTON_STATE[i] == True:
-        #         self.on_button[i].config(image = self.on)
-        #         self.is_on=True
-        #     else:
-        #         self.on_button[i].config(image = self.off)
-        #         self.is_on=False
-        self.window.update()
+        # Call UI_Update() again after a certain delay (e.g., 1000ms = 1 second)
+        self.window.after(1000, self.UI_Update)
+
 
     def UI_Set_Value_Text(self, text_object, data):
         text_object.config(text="%.2f" %data)
@@ -173,11 +181,9 @@ class Main_UI:
         elif number == 8:
             self.on_button[7].config(image= data)
 
-ser1=RS485Controller()
-
 if __name__ == "__main__":
-   
+    ser1 = RS485Controller()
     app = Main_UI(ser1)
-    app.UI_Refresh()
-    time.sleep(1)
+    app.UI_Update()  # Start the update loop
+    app.window.mainloop()  # Start the main event loop of the tkinter window
 
