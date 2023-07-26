@@ -37,7 +37,7 @@ class Main_UI:
         print("Size = ", screen_width, screen_height)
 
         
-        self.intro = tk.Label(text="Control Panel",
+        self.intro = Label(   self.window, text="Control Panel",
                               fg="#000",
                               justify=CENTER,
                               font="Helvetica 50 bold")
@@ -84,39 +84,39 @@ class Main_UI:
         self.Relay8.place(x=2*screen_width / 4 + 55, y=510, width=screen_width / 4, height=100)
 
 
-        self.labelDistance1 = tk.Label(text="Distance1",
+        self.labelDistance1 = Label(self.window, text="Distance1",
                                         fg="#000",
                                         font="Helvetica 50 bold")
 
         self.labelDistance1.place(x=30, y=610, width=screen_width / 3, height=100)
 
 
-        self.labelDistance1Value = tk.Label(text="2000",
+        self.labelDistance1Value = Label(self.window, text="2000",
                                            fg="#000",
                                            font="Helvetica 50 bold")
 
         self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=610, width=screen_width / 3, height=100)
 
-        self.labelDistance1Unit = tk.Label(text="mm",
+        self.labelDistance1Unit = Label(self.window, text="mm",
                                            fg="#000",
                                            font="Helvetica 50 bold")
 
         self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=610, width=screen_width / 4, height=100)
 
-        self.labelDistance2 = tk.Label(text="Distance2",
+        self.labelDistance2 = Label(self.window, text="Distance2",
                                        fg="#000",
                                        font="Helvetica 50 bold")
 
         self.labelDistance2.place(x=30, y=710, width=screen_width / 3, height=100)
 
 
-        self.labelDistance2Value = tk.Label(text="2000",
+        self.labelDistance2Value = Label(self.window, text="2000",
                                             fg="#000",
                                             font="Helvetica 50 bold") 
 
         self.labelDistance2Value.place(x=2*screen_width / 4 - 50, y=710, width=screen_width / 3, height=100)
 
-        self.labelDistance1Unit = tk.Label(text="mm",
+        self.labelDistance1Unit = Label(self.window, text="mm",
                                            fg="#000",
                                            font="Helvetica 50 bold")
 
@@ -173,11 +173,9 @@ class Main_UI:
         elif number == 8:
             self.on_button[7].config(image= data)
 
+
 ser1=RS485Controller()
 app = Main_UI(ser1)
-while(True):   
-    
-    app.UI_Refresh()
-    app.window.mainloop()
-    time.sleep(1.5)
+app.UI_Refresh()
+app.window.mainloop()
 
