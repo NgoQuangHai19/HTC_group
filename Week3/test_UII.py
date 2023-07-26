@@ -37,90 +37,68 @@ class Main_UI:
         print("Size = ", screen_width, screen_height)
 
         
-        self.intro = Label(   self.window, text="Control Panel",
-                              fg="#000",
-                              justify=CENTER,
-                              font="Helvetica 50 bold")
+        self.intro = Label(self.window, text="Control Panel", fg="#ff1944", font="Helvetica 50 bold")
         self.intro.place(x=screen_width/3 , y=0, width=screen_width/3, height=100)
 
         self.on_button[0] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(1))
         self.on_button[0].place(x=screen_width/4 + 55 , y=210)
-        self.Relay1 = Label(self.window, text="Relay 1",fg="#000", font= "Helvetica 50 bold")
+        self.Relay1 = Label(self.window, text="Relay 1",fg="#ff1944", font= "Helvetica 50 bold")
         self.Relay1.place(x=55, y=210, width=screen_width/4, height=100)
 
         self.on_button[1] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(2))
         self.on_button[1].place(x=3* screen_width / 4 + 55, y=210)
-        self.Relay2 = Label(self.window, text="Relay 2", fg="#000", font="Helvetica 50 bold")
+        self.Relay2 = Label(self.window, text="Relay 2", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay2.place(x=2* screen_width / 4 + 55, y=210, width=screen_width / 4, height=100)
 
         self.on_button[2] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(3))
         self.on_button[2].place(x=screen_width / 4 + 55, y=310)
-        self.Relay3 = Label(self.window, text="Relay 3", fg="#000", font="Helvetica 50 bold")
+        self.Relay3 = Label(self.window, text="Relay 3", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay3.place(x=55, y=310, width=screen_width / 4, height=100)
 
         self.on_button[3] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(4))
         self.on_button[3].place(x=3*screen_width / 4 + 55, y=310)
-        self.Relay4 = Label(self.window, text="Relay 4", fg="#000", font="Helvetica 50 bold")
+        self.Relay4 = Label(self.window, text="Relay 4", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay4.place(x=2*screen_width / 4 + 55, y=310, width=screen_width / 4, height=100)
 
         self.on_button[4] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(5))
         self.on_button[4].place(x=screen_width / 4 + 55, y=410)
-        self.Relay5 = Label(self.window, text="Relay 5", fg="#000", font="Helvetica 50 bold")
+        self.Relay5 = Label(self.window, text="Relay 5", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay5.place(x=55, y=410, width=screen_width / 4, height=100)
 
         self.on_button[5] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(6))
         self.on_button[5].place(x=3*screen_width / 4 + 55, y=410)
-        self.Relay6 = Label(self.window, text="Relay 6", fg="#000", font="Helvetica 50 bold")
+        self.Relay6 = Label(self.window, text="Relay 6", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay6.place(x=2*screen_width / 4 + 55, y=410, width=screen_width / 4, height=100)
 
         self.on_button[6] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(7))
         self.on_button[6].place(x=screen_width / 4 + 55, y=510)
-        self.Relay7 = Label(self.window, text="Relay 7", fg="#000", font="Helvetica 50 bold")
+        self.Relay7 = Label(self.window, text="Relay 7", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay7.place(x=55, y=510, width=screen_width / 4, height=100)
 
         self.on_button[7] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(8))
         self.on_button[7].place(x=3*screen_width / 4 + 55, y=510)
-        self.Relay8 = Label(self.window, text="Relay 8", fg="#000", font="Helvetica 50 bold")
+        self.Relay8 = Label(self.window, text="Relay 8", fg="#ff1944", font="Helvetica 50 bold")
         self.Relay8.place(x=2*screen_width / 4 + 55, y=510, width=screen_width / 4, height=100)
 
 
-        self.labelDistance1 = Label(self.window, text="Distance1",
-                                        fg="#000",
-                                        font="Helvetica 50 bold")
-
+        self.labelDistance1 = Label(self.window, text="Distance1", fg="#ff1944", font="Helvetica 50 bold")
         self.labelDistance1.place(x=30, y=610, width=screen_width / 3, height=100)
 
-
-        self.labelDistance1Value = Label(self.window, text="2000",
-                                           fg="#000",
-                                           font="Helvetica 50 bold")
-
+        self.labelDistance1Value = Label(self.window, text="2000", fg="#ff1944", font="Helvetica 50 bold")
         self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=610, width=screen_width / 3, height=100)
 
-        self.labelDistance1Unit = Label(self.window, text="mm",
-                                           fg="#000",
-                                           font="Helvetica 50 bold")
-
+        self.labelDistance1Unit = Label(self.window, text="mm", fg="#ff1944", font="Helvetica 50 bold")
         self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=610, width=screen_width / 4, height=100)
 
-        self.labelDistance2 = Label(self.window, text="Distance2",
-                                       fg="#000",
-                                       font="Helvetica 50 bold")
 
+        self.labelDistance2 = Label(self.window, text="Distance2", fg="#ff1944", font="Helvetica 50 bold")
         self.labelDistance2.place(x=30, y=710, width=screen_width / 3, height=100)
 
-
-        self.labelDistance2Value = Label(self.window, text="2000",
-                                            fg="#000",
-                                            font="Helvetica 50 bold") 
-
+        self.labelDistance2Value = Label(self.window, text="2000", fg="#ff1944", font="Helvetica 50 bold") 
         self.labelDistance2Value.place(x=2*screen_width / 4 - 50, y=710, width=screen_width / 3, height=100)
 
-        self.labelDistance1Unit = Label(self.window, text="mm",
-                                           fg="#000",
-                                           font="Helvetica 50 bold")
-
-        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=710, width=screen_width / 4, height=100)
+        self.labelDistance2Unit = Label(self.window, text="mm", fg="#ff1944", font="Helvetica 50 bold")
+        self.labelDistance2Unit.place(x=2*screen_width / 4 + 300, y=710, width=screen_width / 4, height=100)
 
     def control_relay(self, number, state):
         if state == 1:
@@ -174,8 +152,7 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-ser1=RS485Controller()
+ser1=None
 app = Main_UI(ser1)
-app.UI_Refresh()
+#app.UI_Refresh()
 app.window.mainloop()
-
