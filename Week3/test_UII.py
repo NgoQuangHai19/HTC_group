@@ -158,5 +158,5 @@ ser1=RS485Controller()
 app = Main_UI(ser1)
 while(True):
     app.UI_Refresh()
-    app.window.mainloop()
+    app.window.update()
     time.sleep(1)
