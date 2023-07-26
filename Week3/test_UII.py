@@ -134,7 +134,7 @@ class Main_UI:
     
     def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
-        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(10))
+        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
         for i in range(0, len(self.is_on) - 1 ) :
             if self.dataModel.BUTTON_STATE[i] == True:
                 self.on_button[i].config(image = self.on)
