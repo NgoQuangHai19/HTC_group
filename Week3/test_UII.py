@@ -173,8 +173,10 @@ class Main_UI:
         elif number == 8:
             self.on_button[7].config(image= data)
 
+ser=RS485Controller()
+
 if __name__ == "__main__":
-    ser=RS485Controller()
+   
     app = Main_UI(ser)
     app.UI_Refresh()
     app.window.mainloop()
