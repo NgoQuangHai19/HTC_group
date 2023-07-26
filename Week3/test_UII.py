@@ -25,14 +25,14 @@ class Main_UI:
         for i in range(0, self.numberButton):
             self.on_button.append(Button(self.window, bd=0, justify=RIGHT))
 
-        # self.window.attributes('-fullscreen', True)
-        # self.window.title("Control Panel")
-        # screen_width = self.window.winfo_screenwidth()
-        # screen_height = self.window.winfo_screenheight()
         self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
-        screen_width = 600
-        screen_height = 300
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
+        # self.window.attributes('-fullscreen', True)
+        # self.window.title("Control Panel")
+        # screen_width = 600
+        # screen_height = 300
 
         print("Size = ", screen_width, screen_height)
 
@@ -173,11 +173,11 @@ class Main_UI:
         elif number == 8:
             self.on_button[7].config(image= data)
 
-ser=RS485Controller()
+ser1=RS485Controller()
 
 if __name__ == "__main__":
    
-    app = Main_UI(ser)
+    app = Main_UI(ser1)
     app.UI_Refresh()
-    app.window.mainloop()
+    time.sleep(1)
 
