@@ -8,12 +8,12 @@ from read_sensor_task import *
 
 
 class Main_UI:
-    dataModel = None
+    dataModel = RS485Controller()
     numberButton = 8
     
 
-    def __init__(self):
-        self.dataModel = RS485Controller()
+    def __init__(self, data):
+        self.dataModel = data
         print("Init the UI!!")
         
         self.window = tk.Tk()
