@@ -12,8 +12,8 @@ class Main_UI:
     numberButton = 8
     
 
-    def __init__(self,data):
-        self.dataModel = data
+    def __init__(self):
+        self.dataModel = RS485Controller()
         print("Init the UI!!")
         
         self.window = tk.Tk()
