@@ -38,7 +38,7 @@ class Main_UI:
 
         
         self.intro = Label(self.window, text="Control Panel", fg="#ff1944", font="Helvetica 50 bold")
-        self.intro.place(x=screen_width/3 , y=0, width=screen_width/3, height=100)
+        self.intro.place(x=screen_width/3.5 , y=0, width=screen_width/2, height=100)
 
         self.on_button[0] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(1))
         self.on_button[0].place(x=screen_width/4 + 55 , y=210)
@@ -154,9 +154,9 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-ser1=RS485Controller()
+ser1=None
 app = Main_UI(ser1)
 while(True):
-    app.UI_Refresh()
+    #app.UI_Refresh()
     app.window.update()
     time.sleep(1)
