@@ -175,9 +175,11 @@ class Main_UI:
 
 ser1=RS485Controller()
 
-if __name__ == "__main__":
+while(True):
    
     app = Main_UI(ser1)
+    app.UI_Refresh()
+    time.sleep(1)
     app.UI_Refresh()
     app.window.mainloop()
 
