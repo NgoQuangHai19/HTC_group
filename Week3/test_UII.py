@@ -118,24 +118,18 @@ class Main_UI:
             self.is_on[number - 1] = True
             self.control_relay(number, 1)
     
-    # def UI_Refresh(self):
-    #     self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
-    #     self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
-    #     # for i in range(0, self.numberButton - 1 ) :
-    #     #     if self.dataModel.BUTTON_STATE[i] == True:
-    #     #         self.on_button[i].config(image = self.on)
-    #     #         self.is_on=True
-    #     #     else:
-    #     #         self.on_button[i].config(image = self.off)
-    #     #         self.is_on=False
-    #     self.window.update()
-
-    def UI_Update(self):
-        # Update the UI components here
+    def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
-        # Call UI_Update() again after a certain delay (e.g., 1000ms = 1 second)
-        self.window.after(1000, self.UI_Update)
+        # for i in range(0, self.numberButton - 1 ) :
+        #     if self.dataModel.BUTTON_STATE[i] == True:
+        #         self.on_button[i].config(image = self.on)
+        #         self.is_on=True
+        #     else:
+        #         self.on_button[i].config(image = self.off)
+        #         self.is_on=False
+        self.window.update()
+
 
 
     def UI_Set_Value_Text(self, text_object, data):
@@ -160,7 +154,9 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-ser1=None
+ser1=RS485Controller()
 app = Main_UI(ser1)
-#app.UI_Refresh()
-app.window.mainloop()
+while(True):
+    app.UI_Refresh()
+    app.window.mainloop()
+    time.sleep(1)
