@@ -52,11 +52,11 @@ class RS485Controller:
         if number == 9:
             self.ser.write(distance_9)
             distance = self.serial_read_data()
-            print("Distance of sensor 9: ",distance)
+            print("Distance of sensor 09: ",distance)
         elif number == 12:
             self.ser.write(distance_12)
             distance = self.serial_read_data()
-            print("Distance of sensor 10: ",distance)
+            print("Distance of sensor 12: ",distance)
         else:
             print("The input gate is entered incorrectly")
         return distance
