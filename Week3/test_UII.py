@@ -179,5 +179,5 @@ if __name__ == "__main__":
    
     app = Main_UI(ser1)
     app.UI_Refresh()
-    time.sleep(1)
+    app.window.mainloop()
 
