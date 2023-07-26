@@ -82,13 +82,13 @@ class Main_UI:
 
 
         self.labelDistance1 = Label(self.window, text="Distance1", fg="#ff1944", font="Helvetica 50 bold")
-        self.labelDistance1.place(x=30, y=610, width=screen_width / 3, height=100)
+        self.labelDistance1.place(x=30, y=110, width=screen_width / 3, height=100)
 
         self.labelDistance1Value = Label(self.window, text="2000", fg="#ff1944", font="Helvetica 50 bold")
-        self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=610, width=screen_width / 3, height=100)
+        self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=110, width=screen_width / 3, height=100)
 
         self.labelDistance1Unit = Label(self.window, text="mm", fg="#ff1944", font="Helvetica 50 bold")
-        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=610, width=screen_width / 4, height=100)
+        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=110, width=screen_width / 4, height=100)
 
 
         self.labelDistance2 = Label(self.window, text="Distance2", fg="#ff1944", font="Helvetica 50 bold")
