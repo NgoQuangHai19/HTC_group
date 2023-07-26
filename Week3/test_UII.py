@@ -133,8 +133,13 @@ class Main_UI:
             self.control_relay(number, 1)
     
     def UI_Refresh(self):
+<<<<<<< HEAD
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
+=======
+        self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.rs485.getvalueDistance(9))
+        self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.rs485.getvalueDistance(10))
+>>>>>>> e25688e (Update Ui)
         for i in range(0, len(self.is_on) - 1 ) :
             if self.dataModel.BUTTON_STATE[i] == True:
                 self.on_button[i].config(image = self.on)
