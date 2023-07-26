@@ -139,13 +139,13 @@ class Main_UI:
             self.UI_Set_Button_text(number, self.on)
             self.is_on[number - 1] = True
             self.control_relay(number, 1)
-
-    def UI_Refresh(self):
+    
+    def UI_Update(self):
         # Update the UI components here
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
         # Call UI_Update() again after a certain delay (e.g., 1000ms = 1 second)
-        self.window.after(1000, self.UI_Refresh)
+        self.window.after(1000, self.UI_Update)
 
 
     def UI_Set_Value_Text(self, text_object, data):
@@ -172,6 +172,6 @@ class Main_UI:
 if __name__ == "__main__":
     ser1 = RS485Controller()
     app = Main_UI(ser1)
-    app.UI_Refresh()  # Start the update loop
+    app.UI_Update()  # Start the update loop
     app.window.mainloop()  # Start the main event loop of the tkinter window
 
