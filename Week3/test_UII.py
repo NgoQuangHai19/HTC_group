@@ -154,9 +154,9 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-ser1=RS485Controller()
-app = Main_UI(ser1)
-while(True):
-    app.UI_Refresh()
-    app.window.update()
-    time.sleep(1)
+# ser1=RS485Controller()
+# app = Main_UI(ser1)
+# while(True):
+#     app.UI_Refresh()
+#     app.window.update()
+#     time.sleep(1)
