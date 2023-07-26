@@ -145,7 +145,7 @@ class Main_UI:
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
         # Call UI_Update() again after a certain delay (e.g., 1000ms = 1 second)
-        self.window.after(1000, self.UI_Update)
+        self.window.after(1000, self.UI_Refresh)
 
 
     def UI_Set_Value_Text(self, text_object, data):
