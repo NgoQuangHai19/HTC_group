@@ -30,9 +30,9 @@ class MonitoringTask:
         self.rs485.relayController(number,state)
     
     def getvalueDistance(self, number):
-        distance=self.rs485.getvalueDistance(number)
-        print("Khoang cach la: ",distance)
-        return distance
+        dist=self.rs485.getvalueDistance(number)
+        print("Khoang cach la: ",dist)
+        return dist
         #self.client.mqtt_client.publish(AIO_FEED_ID[2],distance)
 
     def MonitoringTask_Run(self):

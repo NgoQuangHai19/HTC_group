@@ -5,25 +5,28 @@ from Task1 import *
 from Task2 import * 
 from read_sensor_task import *
 from adafruit import *
+from test_UII import *
 import sys
 import time
 
 ###
 
-ser  = RS485Controller()
+m485  = RS485Controller()
 
 scheduler = Scheduler()
 scheduler.SCH_Init()
+monitoring_timer = softwaretimer()
 
-task1 = ReadSensorTask(ser)
-task2 = ReadSensorTask(ser)
+monitoring= MonitoringTask(m485, monitoring_timer)
+main_ui = Main_UI(monitoring)
 
-scheduler.SCH_Add_Task(task1.setDevice1On, 1000, 3000)
-scheduler.SCH_Add_Task(task2.setDevice1Off, 2000, 3000)
+scheduler.SCH_Add_Task(main_ui.UI_Refresh, 1, 1)
+scheduler.SCH_Add_Task(monitoring_timer.Timer_Run, 1, 100)
+#scheduler.SCH_Add_Task(monitoring.MonitoringTask_Run, 1, 100)
 
 
 while True:
     scheduler.SCH_Update()
     scheduler.SCH_Dispatch_Tasks()
-    time.sleep(0.2)
+    time.sleep(0.1)
 

@@ -3,6 +3,9 @@ from tkinter import *
 import time
 from PIL import Image
 from RS485Controller import RS485Controller
+from read_sensor_task import *
+
+
 
 class Main_UI:
     dataModel = None
@@ -14,18 +17,23 @@ class Main_UI:
         print("Init the UI!!")
         
         self.window = tk.Tk()
-        self.on = PhotoImage(file="Week3\on2.png")
-        self.off = PhotoImage(file="Week3\off2.png")
+        self.on = PhotoImage(file="on2.png")
+        self.off = PhotoImage(file="off2.png")
 
         self.is_on = [False, False, False, False, False, False, False, False]
         self.on_button = []
         for i in range(0, self.numberButton):
             self.on_button.append(Button(self.window, bd=0, justify=RIGHT))
 
+        # self.window.attributes('-fullscreen', True)
+        # self.window.title("Control Panel")
+        # screen_width = self.window.winfo_screenwidth()
+        # screen_height = self.window.winfo_screenheight()
         self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
-        screen_width = self.window.winfo_screenwidth()
-        screen_height = self.window.winfo_screenheight()
+        screen_width = 600
+        screen_height = 300
+
         print("Size = ", screen_width, screen_height)
 
         
@@ -135,6 +143,7 @@ class Main_UI:
     def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
+<<<<<<< HEAD
         for i in range(0, len(self.is_on) - 1 ) :
             if self.dataModel.BUTTON_STATE[i] == True:
                 self.on_button[i].config(image = self.on)
@@ -142,6 +151,15 @@ class Main_UI:
             else:
                 self.on_button[i].config(image = self.off)
                 self.is_on=False
+=======
+        # for i in range(0, self.numberButton - 1 ) :
+        #     if self.dataModel.BUTTON_STATE[i] == True:
+        #         self.on_button[i].config(image = self.on)
+        #         self.is_on=True
+        #     else:
+        #         self.on_button[i].config(image = self.off)
+        #         self.is_on=False
+>>>>>>> 5d17f8f5a4a1040241f4a20571effa55a20ba2ba
         self.window.update()
 
     def UI_Set_Value_Text(self, text_object, data):
@@ -166,6 +184,8 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 if __name__ == "__main__":
-    app = Main_UI(None)
+    ser=RS485Controller()
+    app = Main_UI(ser)
+    app.UI_Refresh()
     app.window.mainloop()
 
