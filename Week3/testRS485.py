@@ -8,7 +8,6 @@ time.sleep(1)
 controller.relayController(1, state=0)
 time.sleep(1)
 while True:
-    time.sleep(2)
     distance_9 = controller.getvalueDistance(9)
     print(f"Distance from sensor 9: {distance_9}")
     time.sleep(1.5)
