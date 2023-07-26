@@ -25,10 +25,15 @@ class Main_UI:
         for i in range(0, self.numberButton):
             self.on_button.append(Button(self.window, bd=0, justify=RIGHT))
 
+        # self.window.attributes('-fullscreen', True)
+        # self.window.title("Control Panel")
+        # screen_width = self.window.winfo_screenwidth()
+        # screen_height = self.window.winfo_screenheight()
         self.window.attributes('-fullscreen', True)
         self.window.title("Control Panel")
-        screen_width = self.window.winfo_screenwidth()
-        screen_height = self.window.winfo_screenheight()
+        screen_width = 600
+        screen_height = 300
+
         print("Size = ", screen_width, screen_height)
 
         
@@ -138,13 +143,13 @@ class Main_UI:
     def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
-        for i in range(0, len(self.is_on) - 1 ) :
-            if self.dataModel.BUTTON_STATE[i] == True:
-                self.on_button[i].config(image = self.on)
-                self.is_on=True
-            else:
-                self.on_button[i].config(image = self.off)
-                self.is_on=False
+        # for i in range(0, self.numberButton - 1 ) :
+        #     if self.dataModel.BUTTON_STATE[i] == True:
+        #         self.on_button[i].config(image = self.on)
+        #         self.is_on=True
+        #     else:
+        #         self.on_button[i].config(image = self.off)
+        #         self.is_on=False
         self.window.update()
 
     def UI_Set_Value_Text(self, text_object, data):
@@ -168,8 +173,9 @@ class Main_UI:
         elif number == 8:
             self.on_button[7].config(image= data)
 
-# if __name__ == "__main__":
-#     ser=RS485Controller()
-#     app = Main_UI(ser)
-#     app.window.mainloop()
+if __name__ == "__main__":
+    ser=RS485Controller()
+    app = Main_UI(ser)
+    app.UI_Refresh()
+    app.window.mainloop()
 

@@ -14,10 +14,13 @@ class RS485Controller:
             if len(data_array) >= 7:
                 array_size = len(data_array)
                 value = data_array[array_size - 4] * 256 + data_array[array_size - 3]
+                #print("value : ",value)
                 return value
             else:
                 return -1
         return 0
+    
+    
     
     def relayController(self, number, state):
         relay_ON =  [[1, 6, 0, 0, 0, 255, 201, 138],
@@ -52,12 +55,24 @@ class RS485Controller:
         if number == 9:
             self.ser.write(distance_9)
             distance = self.serial_read_data()
+            print("Distance of sensor 9 : ", distance)
         elif number == 12:
             self.ser.write(distance_12)
             distance = self.serial_read_data()
+            print("Distance of sensor 12 : ", distance)
         else:
             print("The input gate is entered incorrectly")
         return distance
         
-
+while(True):
+    rs485=RS485Controller()
+    # rs485.getvalueDistance(9)
+    # rs485.getvalueDistance(12)
+    rs485.relayController(1,1)
+    print(rs485.serial_read_data())
+    time.sleep(1)
+    rs485.relayController(1,0)
+    print(rs485.serial_read_data())
+    time.sleep(1)
+    
 
