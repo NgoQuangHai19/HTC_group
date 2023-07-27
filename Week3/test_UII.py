@@ -17,8 +17,8 @@ class Main_UI:
         print("Init the UI!!")
         
         self.window = tk.Tk()
-        self.on = PhotoImage(file="on2.png")
-        self.off = PhotoImage(file="off2.png")
+        self.on = PhotoImage(file="Week3/on2.png")
+        self.off = PhotoImage(file="Week3/off2.png")
 
         self.is_on = [False, False, False, False, False, False, False, False]
         self.on_button = []
@@ -38,7 +38,7 @@ class Main_UI:
 
         
         self.intro = Label(self.window, text="Control Panel", fg="#ff1944", font="Helvetica 50 bold")
-        self.intro.place(x=screen_width/3 , y=0, width=screen_width/3, height=100)
+        self.intro.place(x=screen_width/3.5 , y=0, width=screen_width/2, height=100)
 
         self.on_button[0] = Button(self.window, image=self.off, bd=0, command=lambda :self.toggle_button_click(1))
         self.on_button[0].place(x=screen_width/4 + 55 , y=210)
@@ -82,13 +82,13 @@ class Main_UI:
 
 
         self.labelDistance1 = Label(self.window, text="Distance1", fg="#ff1944", font="Helvetica 50 bold")
-        self.labelDistance1.place(x=30, y=610, width=screen_width / 3, height=100)
+        self.labelDistance1.place(x=30, y=110, width=screen_width / 3, height=100)
 
         self.labelDistance1Value = Label(self.window, text="2000", fg="#ff1944", font="Helvetica 50 bold")
-        self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=610, width=screen_width / 3, height=100)
+        self.labelDistance1Value.place(x=2*screen_width / 4 - 50, y=110, width=screen_width / 3, height=100)
 
         self.labelDistance1Unit = Label(self.window, text="mm", fg="#ff1944", font="Helvetica 50 bold")
-        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=610, width=screen_width / 4, height=100)
+        self.labelDistance1Unit.place(x=2*screen_width / 4 + 300, y=110, width=screen_width / 4, height=100)
 
 
         self.labelDistance2 = Label(self.window, text="Distance2", fg="#ff1944", font="Helvetica 50 bold")
@@ -154,9 +154,9 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-ser1=RS485Controller()
+ser1=None
 app = Main_UI(ser1)
 while(True):
-    app.UI_Refresh()
+    #app.UI_Refresh()
     app.window.update()
     time.sleep(1)
