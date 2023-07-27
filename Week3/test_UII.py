@@ -17,8 +17,8 @@ class Main_UI:
         print("Init the UI!!")
         
         self.window = tk.Tk()
-        self.on = PhotoImage(file="on2.png")
-        self.off = PhotoImage(file="off2.png")
+        self.on = PhotoImage(file="Week3/on2.png")
+        self.off = PhotoImage(file="Week3/off2.png")
 
         self.is_on = [False, False, False, False, False, False, False, False]
         self.on_button = []
@@ -154,9 +154,9 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-# ser1=RS485Controller()
-# app = Main_UI(ser1)
-# while(True):
-#     app.UI_Refresh()
-#     app.window.update()
-#     time.sleep(1)
+ser1=None
+app = Main_UI(ser1)
+while(True):
+    #app.UI_Refresh()
+    app.window.update()
+    time.sleep(1)
