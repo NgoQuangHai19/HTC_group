@@ -356,7 +356,7 @@ class App(customtkinter.CTk):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
 ser=RS485Controller()
-app=App(None)
+app=App(ser)
 while(True): 
     app.UI_Refresh()
     time.sleep(0.1)
