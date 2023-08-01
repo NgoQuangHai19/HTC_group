@@ -43,9 +43,9 @@ class App(customtkinter.CTk):
         self.navigation_frame.grid(row=0, column=0, sticky="nsew")
         self.navigation_frame.grid_rowconfigure(4, weight=1)
 
-        self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, text="  Smart Agriculture", image=self.logo_image,
+        self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, text=" Smart Agriculture", image=self.logo_image,
                                                              compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
-        self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
+        self.navigation_frame_label.grid(row=0, column=0, padx=0, pady=0)
 
         self.home_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Home",
                                                    fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
@@ -184,10 +184,10 @@ class App(customtkinter.CTk):
         # self.lable_show_camera = customtkinter.CTkLabel(self.second_frame_top, text="Show", width= 100, justify="center")
         # self.lable_show_camera.grid(row=0, column= 4)
 
-        self.camera_all = {'camera 1':self.entry_IP_camera_1.get(),
-                           'camera 2':self.entry_IP_camera_2.get()}
+        self.camera_all = {'Camera 1':self.entry_IP_camera_1.get(),
+                           'Camera 2':self.entry_IP_camera_2.get()}
         
-        self.option_camera = customtkinter.CTkOptionMenu(self.second_frame_top, values=["camera 1","camera 2"], anchor="w",
+        self.option_camera = customtkinter.CTkOptionMenu(self.second_frame_top, values=["Camera 1","Camera 2"], anchor="w",
                                                          command=self.option_display)
         self.option_camera.grid(row=0, column=4, padx=60, sticky="e")
 
@@ -196,7 +196,7 @@ class App(customtkinter.CTk):
         self.run_button.grid(row=1, column=4, padx=60, sticky="e")
 
 
-        self.displayCamera_canvas = customtkinter.CTkCanvas(self.second_frame_bot, height=500, width=1000)
+        self.displayCamera_canvas = customtkinter.CTkCanvas(self.second_frame_bot, height=450, width=635)
         self.displayCamera_canvas.grid(row=0,column=0, padx=30, pady=30, sticky="nsew")
     
         self.ip = self.var_IP_camera_1.get()
@@ -262,7 +262,8 @@ class App(customtkinter.CTk):
 
 
     def option_display(self, selected_camera):
-        if selected_camera == "camera 1":
+
+        if selected_camera == "Camera 1":
             self.ip = self.var_IP_camera_1.get()  
             self.port = self.port_camera_1.get()  
         else:
@@ -355,11 +356,12 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-ser=RS485Controller()
-app=App(ser)
+# ser=RS485Controller()
+# app=App(ser)
 # app.mainloop()
+app=App(None)
 while(True): 
-    app.UI_Refresh()
+    app.mainloop()
     time.sleep(0.1)
         
         
