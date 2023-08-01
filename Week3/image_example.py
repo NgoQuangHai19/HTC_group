@@ -143,7 +143,8 @@ class App(customtkinter.CTk):
         self.second_frame_top.grid_columnconfigure(4, weight=1)
         self.second_frame_bot.grid(row=1)
         self.second_frame_bot.grid_columnconfigure(0, weight=1)
-        # self.second_frame_bot.grid_rowconfigure(0, weight=1)
+        self.second_frame_bot.grid_rowconfigure(0, weight=1)
+        self.second_frame_bot.grid(rowspan=1, columnspan=1)
 
 
         self.lable_display_camera_1 = customtkinter.CTkLabel(self.second_frame_top, text="IP camera 1 :", 
@@ -197,7 +198,7 @@ class App(customtkinter.CTk):
 
 
         self.displayCamera_canvas = customtkinter.CTkCanvas(self.second_frame_bot, height=450, width=635)
-        self.displayCamera_canvas.grid(row=0,column=0, padx=30, pady=10, sticky="nsew")
+        self.displayCamera_canvas.grid(row=1,column=0, padx=30, pady=10, sticky="nsew")
     
         self.ip = self.var_IP_camera_1.get()
         self.port = self.port_camera_1.get()
@@ -245,7 +246,7 @@ class App(customtkinter.CTk):
                 cv2.destroyAllWindows()
 
             self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
-            self.exit_button.grid(row=1, column=0, padx=10, pady=10, sticky="se")
+            self.exit_button.grid(row=0, column=0, padx=10, pady=10, sticky="ne")
 
             self.display_camera_thread = threading.Thread(target=update_canvas)
             self.display_camera_thread.daemon = True
