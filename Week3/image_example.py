@@ -203,6 +203,9 @@ class App(customtkinter.CTk):
         self.ip = self.var_IP_camera_1.get()
         self.port = self.port_camera_1.get()
 
+        self.exit_button = customtkinter.CTkButton(self.second_frame_top, text="Exit", command=self.exit_camera_display)
+        self.exit_button.grid(row=2, column=4, padx=10, pady=5)
+        
 #------------------------------------------------------------------------------------------------------------
         
         
@@ -245,9 +248,10 @@ class App(customtkinter.CTk):
                 cap.release()
                 cv2.destroyAllWindows()
 
-            self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
-            self.exit_button.grid(row=0, column=0, padx=10, pady=10, sticky="ne")
+            # self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
+            # self.exit_button.grid(row=0, column=0, padx=10, pady=10, sticky="ne")
 
+            #self.exit_button.grid(row=2, column=4, padx=10, pady=5, )
             self.display_camera_thread = threading.Thread(target=update_canvas)
             self.display_camera_thread.daemon = True
             self.display_camera_thread.start()
@@ -258,8 +262,8 @@ class App(customtkinter.CTk):
 
     def exit_camera_display(self):
         self.exit_flag = True
-        if hasattr(self, "exit_button"):
-            self.exit_button.destroy()
+        # if hasattr(self, "exit_button"):
+        #     self.exit_button.destroy()
 
 
     def option_display(self, selected_camera):
@@ -363,7 +367,7 @@ class App(customtkinter.CTk):
 app=App(None)
 while(True): 
     app.mainloop()
-    time.sleep(0.1)
+    #time.sleep(0.1)
         
         
 
