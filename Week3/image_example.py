@@ -18,7 +18,7 @@ class App(customtkinter.CTk):
         super().__init__()
         self.dataModel = data
         self.title("image_example.py")
-        self.geometry("1024x600")
+        self.geometry("950x557")
 
         # set grid layout 1x2
         self.grid_rowconfigure(0, weight=1)
@@ -149,14 +149,14 @@ class App(customtkinter.CTk):
         self.lable_display_camera_1 = customtkinter.CTkLabel(self.second_frame_top, text="IP camera 1 :", 
                                                              image= self.image_display_camera_1,
                                                              compound="left", height=20)
-        self.lable_display_camera_1.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+        self.lable_display_camera_1.grid(row=0, column=0, padx=10, pady=5, sticky="w")
 
         self.var_IP_camera_1 = customtkinter.StringVar(value="")
         self.entry_IP_camera_1 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.var_IP_camera_1, 
                                                         width= 150)
-        self.entry_IP_camera_1.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        self.entry_IP_camera_1.grid(row=0, column=1, padx=10, pady=5, sticky="w")
         self.lable_port_1 = customtkinter.CTkLabel(self.second_frame_top, text="Port Camera 1 :")
-        self.lable_port_1.grid(row=0, column= 2, padx=20, pady=10, sticky="w")
+        self.lable_port_1.grid(row=0, column= 2, padx=20, pady=5, sticky="w")
         self.port_camera_1 = customtkinter.StringVar(value="4747")
         self.entry_port_1 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.port_camera_1, 
                                                    width= 50)
@@ -167,13 +167,13 @@ class App(customtkinter.CTk):
         self.lable_display_camera_2 = customtkinter.CTkLabel(self.second_frame_top, text="IP camera 2 :", 
                                                              image= self.image_display_camera_1,
                                                              compound="left", height=20)
-        self.lable_display_camera_2.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+        self.lable_display_camera_2.grid(row=1, column=0, padx=10, pady=5, sticky="w")
         self.var_IP_camera_2 = customtkinter.StringVar(value="")
         self.entry_IP_camera_2 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.var_IP_camera_2, 
                                                         width= 150)
-        self.entry_IP_camera_2.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        self.entry_IP_camera_2.grid(row=1, column=1, padx=10, pady=5, sticky="w")
         self.lable_port_2 = customtkinter.CTkLabel(self.second_frame_top, text="Port Camera 2 :")
-        self.lable_port_2.grid(row=1, column= 2, padx=20, pady=10, sticky="w")
+        self.lable_port_2.grid(row=1, column= 2, padx=20, pady=5, sticky="w")
         self.port_camera_2 = customtkinter.StringVar(value="4747")
         self.entry_port_2 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.port_camera_2, 
                                                    width= 50)
@@ -197,7 +197,7 @@ class App(customtkinter.CTk):
 
 
         self.displayCamera_canvas = customtkinter.CTkCanvas(self.second_frame_bot, height=450, width=635)
-        self.displayCamera_canvas.grid(row=0,column=0, padx=30, pady=30, sticky="nsew")
+        self.displayCamera_canvas.grid(row=0,column=0, padx=30, pady=10, sticky="nsew")
     
         self.ip = self.var_IP_camera_1.get()
         self.port = self.port_camera_1.get()
