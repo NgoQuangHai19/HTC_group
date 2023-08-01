@@ -1,7 +1,14 @@
 import customtkinter
 import os
 from PIL import Image
+import cv2
+import numpy as np
+import requests
 import time
+
+from PIL import ImageOps
+from PIL import Image, ImageTk
+import threading
 
 
 class App(customtkinter.CTk):
@@ -120,14 +127,152 @@ class App(customtkinter.CTk):
 
         
 
+
+#------------------------------------attribute in frame 2------------------------------------------------------
+        
+        self.image_display_camera_1 = customtkinter.CTkImage(Image.open(os.path.join(image_path, "image_display_camera_1.png")), size=(26, 26))
+        
         # create second frame
         self.second_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+        self.second_frame.grid_rowconfigure(1, weight=1)
 
+        self.second_frame_top = customtkinter.CTkFrame(self.second_frame, corner_radius=0, fg_color="transparent")
+        self.second_frame_bot = customtkinter.CTkFrame(self.second_frame, corner_radius=0, fg_color="transparent")
+        self.second_frame_top.grid(row=0)
+        self.second_frame_top.grid_columnconfigure(4, weight=1)
+        self.second_frame_bot.grid(row=1)
+        self.second_frame_bot.grid_columnconfigure(0, weight=1)
+        # self.second_frame_bot.grid_rowconfigure(0, weight=1)
+
+
+        self.lable_display_camera_1 = customtkinter.CTkLabel(self.second_frame_top, text="IP camera 1 :", 
+                                                             image= self.image_display_camera_1,
+                                                             compound="left", height=20)
+        self.lable_display_camera_1.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+
+        self.var_IP_camera_1 = customtkinter.StringVar(value="")
+        self.entry_IP_camera_1 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.var_IP_camera_1, 
+                                                        width= 150)
+        self.entry_IP_camera_1.grid(row=0, column=1, padx=10, pady=10, sticky="w")
+        self.lable_port_1 = customtkinter.CTkLabel(self.second_frame_top, text="Port Camera 1 :")
+        self.lable_port_1.grid(row=0, column= 2, padx=20, pady=10, sticky="w")
+        self.port_camera_1 = customtkinter.StringVar(value="4747")
+        self.entry_port_1 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.port_camera_1, 
+                                                   width= 50)
+        self.entry_port_1.grid(row=0, column= 3, sticky="w")
+
+
+
+        self.lable_display_camera_2 = customtkinter.CTkLabel(self.second_frame_top, text="IP camera 2 :", 
+                                                             image= self.image_display_camera_1,
+                                                             compound="left", height=20)
+        self.lable_display_camera_2.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+        self.var_IP_camera_2 = customtkinter.StringVar(value="")
+        self.entry_IP_camera_2 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.var_IP_camera_2, 
+                                                        width= 150)
+        self.entry_IP_camera_2.grid(row=1, column=1, padx=10, pady=10, sticky="w")
+        self.lable_port_2 = customtkinter.CTkLabel(self.second_frame_top, text="Port Camera 2 :")
+        self.lable_port_2.grid(row=1, column= 2, padx=20, pady=10, sticky="w")
+        self.port_camera_2 = customtkinter.StringVar(value="4747")
+        self.entry_port_2 = customtkinter.CTkEntry(self.second_frame_top, textvariable=self.port_camera_2, 
+                                                   width= 50)
+        self.entry_port_2.grid(row=1, column= 3, sticky="w")
+        
+
+
+        # self.lable_show_camera = customtkinter.CTkLabel(self.second_frame_top, text="Show", width= 100, justify="center")
+        # self.lable_show_camera.grid(row=0, column= 4)
+
+        self.camera_all = {'camera 1':self.entry_IP_camera_1.get(),
+                           'camera 2':self.entry_IP_camera_2.get()}
+        
+        self.option_camera = customtkinter.CTkOptionMenu(self.second_frame_top, values=["camera 1","camera 2"], anchor="w",
+                                                         command=self.option_display)
+        self.option_camera.grid(row=0, column=4, padx=60, sticky="e")
+
+        self.run_button = customtkinter.CTkButton(self.second_frame_top, text="Run", fg_color="green",
+                                                  command=self.display_camera)
+        self.run_button.grid(row=1, column=4, padx=60, sticky="e")
+
+
+        self.displayCamera_canvas = customtkinter.CTkCanvas(self.second_frame_bot, height=500, width=1000)
+        self.displayCamera_canvas.grid(row=0,column=0, padx=30, pady=30, sticky="nsew")
+    
+        self.ip = self.var_IP_camera_1.get()
+        self.port = self.port_camera_1.get()
+
+#------------------------------------------------------------------------------------------------------------
+        
+        
         # create third frame
         self.third_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
 
         # select default frame
         self.select_frame_by_name("home")
+
+
+#---------------------------------
+    def display_camera(self):
+        if not self.ip or not self.port:
+            print("Please enter valid IP and port")
+            return
+
+        self.exit_flag = False  
+
+        url = f"http://{self.ip}:{self.port}/video"
+
+        try:
+            cap = cv2.VideoCapture(url)
+            if not cap.isOpened():
+                print("Failed to open video stream")
+                return
+
+            def update_canvas():
+                while not self.exit_flag:
+                    ret, frame = cap.read()
+                    if not ret:
+                        break
+
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    frame_pil = Image.fromarray(frame_rgb)
+                    rotated_frame = ImageOps.exif_transpose(frame_pil)
+                    photo = ImageTk.PhotoImage(rotated_frame)
+                    self.displayCamera_canvas.create_image(0, 0, anchor="nw", image=photo)
+                    self.displayCamera_canvas.photo = photo  
+
+                cap.release()
+                cv2.destroyAllWindows()
+
+            self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
+            self.exit_button.grid(row=1, column=0, padx=10, pady=10, sticky="se")
+
+            self.display_camera_thread = threading.Thread(target=update_canvas)
+            self.display_camera_thread.daemon = True
+            self.display_camera_thread.start()
+
+        except requests.exceptions.InvalidURL as e:
+            print(f"Error: {e}")
+
+
+    def exit_camera_display(self):
+        self.exit_flag = True
+        if hasattr(self, "exit_button"):
+            self.exit_button.destroy()
+
+
+    def option_display(self, selected_camera):
+        if selected_camera == "camera 1":
+            self.ip = self.var_IP_camera_1.get()  
+            self.port = self.port_camera_1.get()  
+        else:
+            self.ip = self.var_IP_camera_2.get()  
+            self.port = self.port_camera_2.get()   
+
+#--------------------------------------------------------------------------------------------------------
+
+
+
+
         
     def select_frame_by_name(self, name):
         # set button color for selected button

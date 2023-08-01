@@ -2,7 +2,9 @@ import customtkinter
 import os
 from PIL import Image
 import time
-
+import cv2
+import numpy as np
+import requests
 
 class App(customtkinter.CTk):
     numberButton=8
@@ -35,26 +37,49 @@ class App(customtkinter.CTk):
         self.navigation_frame.grid(row=0, column=0, sticky="nsew")
         self.navigation_frame.grid_rowconfigure(4, weight=1)
 
-        self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, text="  Smart Agriculture", image=self.logo_image,
-                                                             compound="left", font=customtkinter.CTkFont(size=15, weight="bold"))
+        self.navigation_frame_label = customtkinter.CTkLabel(self.navigation_frame, 
+                                                             text="  Smart Agriculture", 
+                                                             image=self.logo_image,
+                                                             compound="left", 
+                                                             font=customtkinter.CTkFont(size=15, weight="bold"))
         self.navigation_frame_label.grid(row=0, column=0, padx=20, pady=20)
 
-        self.home_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Home",
-                                                   fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-                                                   image=self.home_image, anchor="w", command=self.home_button_event)
+        self.home_button = customtkinter.CTkButton(self.navigation_frame, 
+                                                   corner_radius=0, height=40, 
+                                                   border_spacing=10, text="Home",
+                                                   fg_color="transparent", 
+                                                   text_color=("gray10", "gray90"), 
+                                                   hover_color=("gray70", "gray30"),
+                                                   image=self.home_image, 
+                                                   anchor="w", 
+                                                   command=self.home_button_event)
         self.home_button.grid(row=1, column=0, sticky="ew")
 
-        self.frame_2_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Frame 2",
-                                                      fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-                                                      image=self.chat_image, anchor="w", command=self.frame_2_button_event)
+        self.frame_2_button = customtkinter.CTkButton(self.navigation_frame, 
+                                                      corner_radius=0, height=40, 
+                                                      border_spacing=10, text="Frame 2",
+                                                      fg_color="transparent", 
+                                                      text_color=("gray10", "gray90"), 
+                                                      hover_color=("gray70", "gray30"),
+                                                      image=self.chat_image, 
+                                                      anchor="w", 
+                                                      command=self.frame_2_button_event)
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
 
-        self.frame_3_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Frame 3",
-                                                      fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
-                                                      image=self.add_user_image, anchor="w", command=self.frame_3_button_event)
+        self.frame_3_button = customtkinter.CTkButton(self.navigation_frame, 
+                                                      corner_radius=0, 
+                                                      height=40, 
+                                                      border_spacing=10, 
+                                                      text="Frame 3",
+                                                      fg_color="transparent", 
+                                                      text_color=("gray10", "gray90"), 
+                                                      hover_color=("gray70", "gray30"),
+                                                      image=self.add_user_image, anchor="w", 
+                                                      command=self.frame_3_button_event)
         self.frame_3_button.grid(row=3, column=0, sticky="ew")
 
-        self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame, values=["Light", "Dark", "System"],
+        self.appearance_mode_menu = customtkinter.CTkOptionMenu(self.navigation_frame, 
+                                                                values=["Light", "Dark", "System"],
                                                                 command=self.change_appearance_mode_event)
         self.appearance_mode_menu.grid(row=6, column=0, padx=20, pady=20, sticky="s")
 
@@ -128,6 +153,96 @@ class App(customtkinter.CTk):
 
         # select default frame
         self.select_frame_by_name("home")
+
+    #--------------------------------------------------------------------------------------------------
+    # create second frame
+        self.second_frame = customtkinter.CTkFrame(self, corner_radius=0, fg_color="transparent")
+
+        # create chat box
+        self.chat_box = customtkinter.CTkTextbox(self.second_frame, width=80, height=10)
+        self.chat_box.grid(row=0, column=0, padx=20, pady=20, columnspan=2)
+
+        # create switch button
+        self.switch_state = False
+        self.switch_image_on = customtkinter.CTkImage(Image.open(os.path.join(image_path, "switch_on.png")), size=(100, 40))
+        self.switch_image_off = customtkinter.CTkImage(Image.open(os.path.join(image_path, "switch_off.png")), size=(100, 40))
+        self.switch_button = customtkinter.CTkButton(self.second_frame,
+                                                     text="Switch",
+                                                     image=self.switch_image_off,
+                                                     compound="left",
+                                                     font=customtkinter.CTkFont(size=12),
+                                                     command=self.toggle_switch)
+        self.switch_button.grid(row=1, column=0, padx=20, pady=20)
+
+        # create camera label
+        self.camera_image = customtkinter.CTkImage(Image.open(os.path.join(image_path, "hcmut.png")), size=(640, 360))
+        self.camera_label = customtkinter.CTkLabel(self.second_frame, image=self.camera_image)
+        self.camera_label.grid(row=2, column=0, padx=20, pady=20)
+
+        # set the current camera index
+        self.current_camera = 1
+
+        # select default frame
+        self.select_frame_by_name("home")
+
+    # ... (previous code)
+
+    def toggle_switch(self):
+        self.switch_state = not self.switch_state
+        if self.switch_state:
+            self.switch_button.configure(image=self.switch_image_on)
+        else:
+            self.switch_button.configure(image=self.switch_image_off)
+
+        # switch between Camera 1 and Camera 2
+        if self.current_camera == 1:
+            self.current_camera = 2
+        else:
+            self.current_camera = 1
+
+        # Display camera based on the current camera index
+        self.display_camera()
+
+    def display_camera(self):
+    # set the IP and port of the selected camera
+        if self.current_camera == 1:
+            ip = "192.168.1.86"
+        else:
+            ip = "10.128.91.182"
+        port = 4747
+
+        # Tạo URL để truy cập video từ camera
+        url = "http://" + ip + ":" + str(port) + "/video"
+
+        # Mở kết nối đến camera thông qua URL
+        stream = requests.get(url, stream=True)
+
+        # Đọc dữ liệu video từ camera
+        bytes_data = bytes()
+        for chunk in stream.iter_content(chunk_size=1024):
+            bytes_data += chunk
+            a = bytes_data.find(b'\xff\xd8')
+            b = bytes_data.find(b'\xff\xd9')
+            if a != -1 and b != -1:
+                jpg = bytes_data[a:b+2]
+                bytes_data = bytes_data[b+2:]
+                # Hiển thị video từ dữ liệu nhận được
+                frame = cv2.imdecode(np.frombuffer(jpg, dtype=np.uint8), cv2.IMREAD_COLOR)
+                frame = cv2.resize(frame, (640, 360))
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                image = Image.fromarray(frame)
+                self.camera_image.set_image(image)
+                self.camera_label.update()
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        # Đóng kết nối và giải phóng tài nguyên
+        stream.close()
+        cv2.destroyAllWindows()
+
+    #------------------------------------------------------------------------------------------------
+
+
         
     def select_frame_by_name(self, name):
         # set button color for selected button
@@ -208,7 +323,7 @@ class App(customtkinter.CTk):
 
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
-
+    
 
 if __name__ == "__main__":
     app = App(None)
