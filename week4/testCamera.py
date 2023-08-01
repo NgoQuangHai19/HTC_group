@@ -30,7 +30,7 @@ def display_camera(ip, port):
 
 if __name__ == "__main__":
     # Nhập IP và cổng của camera thứ nhất
-    ip1 = "10.128.54.58"
+    ip1 = "172.20.12.12"
     port = 4747
 
     # Nhập IP và cổng của camera thứ hai

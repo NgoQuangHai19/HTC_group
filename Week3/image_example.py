@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import requests
 import time
+from RS485Controller import *
 
 from PIL import ImageOps
 from PIL import Image, ImageTk
@@ -51,7 +52,7 @@ class App(customtkinter.CTk):
                                                    image=self.home_image, anchor="w", command=self.home_button_event)
         self.home_button.grid(row=1, column=0, sticky="ew")
 
-        self.frame_2_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Frame 2",
+        self.frame_2_button = customtkinter.CTkButton(self.navigation_frame, corner_radius=0, height=40, border_spacing=10, text="Camera AI",
                                                       fg_color="transparent", text_color=("gray10", "gray90"), hover_color=("gray70", "gray30"),
                                                       image=self.chat_image, anchor="w", command=self.frame_2_button_event)
         self.frame_2_button.grid(row=2, column=0, sticky="ew")
@@ -306,11 +307,11 @@ class App(customtkinter.CTk):
         if self.is_on[number - 1]:
             self.UI_Set_Button_text(number, self.off)
             self.is_on[number - 1] = False
-            #self.control_relay(number, 0)
+            self.control_relay(number, 0)
         else:
             self.UI_Set_Button_text(number, self.on)
             self.is_on[number - 1] = True
-            #self.control_relay(number, 1)
+            self.control_relay(number, 1)
 
     def UI_Set_Button_text(self, number, data):
         if number == 1:
@@ -334,8 +335,8 @@ class App(customtkinter.CTk):
         text_object.configure(text="%.2f" %data)
 
     def UI_Refresh(self):
-        #self.slider_Refresh(self.distance1, self.dataModel.getvalueDistance(9))
-        #self.slider_Refresh(self.distance2, self.dataModel.getvalueDistance(12))
+        self.slider_Refresh(self.distance1, self.dataModel.getvalueDistance(9))
+        self.slider_Refresh(self.distance2, self.dataModel.getvalueDistance(12))
         self.update()
 
     #update muc nuoc, chieu cao cua thung la 3000 mm
@@ -354,6 +355,7 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
+ser=RS485Controller()
 app=App(None)
 while(True): 
     app.UI_Refresh()

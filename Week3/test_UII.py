@@ -121,13 +121,13 @@ class Main_UI:
     def UI_Refresh(self):
         self.UI_Set_Value_Text(self.labelDistance1Value, self.dataModel.getvalueDistance(9))
         self.UI_Set_Value_Text(self.labelDistance2Value, self.dataModel.getvalueDistance(12))
-        # for i in range(0, self.numberButton - 1 ) :
-        #     if self.dataModel.BUTTON_STATE[i] == True:
-        #         self.on_button[i].config(image = self.on)
-        #         self.is_on=True
-        #     else:
-        #         self.on_button[i].config(image = self.off)
-        #         self.is_on=False
+        for i in range(0, self.numberButton - 1 ) :
+            if self.dataModel.BUTTON_STATE[i] == True:
+                self.on_button[i].config(image = self.on)
+                self.is_on=True
+            else:
+                self.on_button[i].config(image = self.off)
+                self.is_on=False
         self.window.update()
 
 
@@ -154,9 +154,9 @@ class Main_UI:
             self.on_button[7].config(image= data)
 
 
-ser1=None
-app = Main_UI(ser1)
-while(True):
-    #app.UI_Refresh()
-    app.window.update()
-    time.sleep(1)
+# ser1=None
+# app = Main_UI(ser1)
+# while(True):
+#     #app.UI_Refresh()
+#     app.window.update()
+#     time.sleep(1)
