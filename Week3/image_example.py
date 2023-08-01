@@ -203,7 +203,7 @@ class App(customtkinter.CTk):
         self.ip = self.var_IP_camera_1.get()
         self.port = self.port_camera_1.get()
 
-        self.exit_button = customtkinter.CTkButton(self.second_frame_top, text="Exit", command=self.exit_camera_display)
+        self.exit_button = customtkinter.CTkButton(self.second_frame_top, text="Exit", command=self.exit_camera_display, fg_color="green")
         self.exit_button.grid(row=2, column=4, padx=10, pady=5)
         
 #------------------------------------------------------------------------------------------------------------
@@ -363,10 +363,6 @@ class App(customtkinter.CTk):
 
 # ser=RS485Controller()
 # app=App(ser)
-# app.mainloop()
-app=App(None)
-app.mainloop()
-    #time.sleep(0.1)
         
         
 
