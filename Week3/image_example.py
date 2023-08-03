@@ -357,11 +357,11 @@ class App(customtkinter.CTk):
 
 ser=RS485Controller()
 app=App(ser)
-while(True): 
-    app.UI_Refresh()
-    time.sleep(0.1)
+# while(True): 
+#     app.UI_Refresh()
+#     time.sleep(0.1)
         
-        
+app.mainloop()
 
     
 
