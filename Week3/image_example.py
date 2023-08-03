@@ -209,10 +209,7 @@ class App(customtkinter.CTk):
 
 
 
-        self.exit_flag = False
         self.mask_detection_enabled = False
-        self.displayCamera_canvas = None
-        self.display_camera_thread = None
         self.button_modelAI = customtkinter.CTkButton(self.second_frame_top, text="Model AI",
                                                        command=self.start_mask_detection)
         self.button_modelAI.grid(row=2, column=3)
@@ -237,6 +234,8 @@ class App(customtkinter.CTk):
             print("Please enter valid IP and port")
             return
 
+        self.exit_flag = False  
+
         url = f"http://{self.ip}:{self.port}/video"
 
         try:
@@ -255,8 +254,12 @@ class App(customtkinter.CTk):
                     if not ret:
                         break
 
+                    frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                    frame_pil = Image.fromarray(frame_rgb)
+                    rotated_frame = ImageOps.exif_transpose(frame_pil)
+                    photo = ImageTk.PhotoImage(rotated_frame)
+
                     if self.mask_detection_enabled:  # Kiểm tra cờ để kích hoạt phát hiện khẩu trang
-                        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                         size = (224, 224)
                         image = ImageOps.fit(Image.fromarray(frame_rgb), size, Image.Resampling.LANCZOS)
                         # Turn the image into a numpy array
@@ -295,16 +298,14 @@ class App(customtkinter.CTk):
                             cv2.LINE_AA,
                         )
 
-                    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    frame_pil = Image.fromarray(frame)
-                    rotated_frame = ImageOps.exif_transpose(frame_pil)
-                    photo = ImageTk.PhotoImage(rotated_frame)
-
                     self.displayCamera_canvas.create_image(0, 0, anchor="nw", image=photo)
-                    self.displayCamera_canvas.photo = photo
+                    self.displayCamera_canvas.photo = photo  
 
                 cap.release()
                 cv2.destroyAllWindows()
+
+            self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
+            self.exit_button.grid(row=1, column=0, padx=10, pady=10, sticky="se")
 
             self.display_camera_thread = threading.Thread(target=update_canvas)
             self.display_camera_thread.daemon = True
@@ -415,13 +416,10 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-ser=RS485Controller()
-app=App(ser)
-app.UI_Refresh()
+# ser=RS485Controller()
+app=App(None)
+# app.UI_Refresh()
 app.mainloop()
         
-        
-app.mainloop()
-
     
 
