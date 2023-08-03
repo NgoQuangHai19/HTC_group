@@ -224,10 +224,6 @@ class App(customtkinter.CTk):
 
 
 #---------------------------------
-    def start_mask_detection(self):
-        self.mask_detection_enabled = True
-    def stop_mask_detection(self):
-        self.mask_detection_enabled = False
     def display_camera(self):
         if not self.ip or not self.port:
             print("Please enter valid IP and port")
@@ -255,6 +251,8 @@ class App(customtkinter.CTk):
                 return
 
             def update_canvas():
+
+                
                 while not self.exit_flag:
                     ret, frame = cap.read()
                     if not ret:
@@ -318,12 +316,16 @@ class App(customtkinter.CTk):
                     self.displayCamera_canvas.create_image(0, 0, anchor="nw", image=photo)
                     self.displayCamera_canvas.photo = photo  
 
+
+                    
+
                 cap.release()
                 cv2.destroyAllWindows()
 
-            self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
-            self.exit_button.grid(row=1, column=0, padx=10, pady=10, sticky="se")
+            # self.exit_button = customtkinter.CTkButton(self.second_frame_bot, text="Exit", command=self.exit_camera_display)
+            # self.exit_button.grid(row=0, column=0, padx=10, pady=10, sticky="ne")
 
+            #self.exit_button.grid(row=2, column=4, padx=10, pady=5, )
             self.display_camera_thread = threading.Thread(target=update_canvas)
             self.display_camera_thread.daemon = True
             self.display_camera_thread.start()
@@ -436,13 +438,15 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-ser=RS485Controller()
-app=App(ser)
-app.UI_Refresh()
-app.mainloop()
-
-# app=App(None)
+# ser=RS485Controller()
+# app=App(ser)
+# app.UI_Refresh()
 # app.mainloop()
+
+app=App(None)
+app.mainloop()
         
+        
+
     
 
