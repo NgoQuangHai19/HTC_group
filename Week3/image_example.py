@@ -10,6 +10,7 @@ from RS485Controller import *
 from PIL import ImageOps
 from PIL import Image, ImageTk
 import threading
+from keras.models import load_model
 
 
 class App(customtkinter.CTk):
@@ -82,47 +83,47 @@ class App(customtkinter.CTk):
         self.home_frame_large_image_label.grid(row=0, column=1, padx=0, pady=10, sticky="n")
 
         # Tao cac buton
-        self.on_button[0] = customtkinter.CTkButton(self.home_frame, text="Relay 1", image=self.on, compound="right", width=150, height=50,
+        self.on_button[0] = customtkinter.CTkButton(self.home_frame, text="Relay 1", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(1))
         self.on_button[0].grid(row=2, column=0, padx=50, pady=15)
 
-        self.on_button[1] = customtkinter.CTkButton(self.home_frame, text="Relay 2", image=self.on, compound="right", width=150, height=50,
+        self.on_button[1] = customtkinter.CTkButton(self.home_frame, text="Relay 2", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(2))
         self.on_button[1].grid(row=2, column=1, padx=0, pady=15)
 
-        self.on_button[2] = customtkinter.CTkButton(self.home_frame, text="Relay 3", image=self.on, compound="right", width=150, height=50,
+        self.on_button[2] = customtkinter.CTkButton(self.home_frame, text="Relay 3", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(3))
         self.on_button[2].grid(row=2, column=2, padx=50, pady=15)
 
-        self.on_button[3] = customtkinter.CTkButton(self.home_frame, text="Relay 4", image=self.on, compound="right", width=150, height=50,
+        self.on_button[3] = customtkinter.CTkButton(self.home_frame, text="Relay 4", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(4))
         self.on_button[3].grid(row=3, column=0, padx=50, pady=15)
 
-        self.on_button[4] = customtkinter.CTkButton(self.home_frame, text="Relay 5", image=self.on, compound="right", width=150, height=50,
+        self.on_button[4] = customtkinter.CTkButton(self.home_frame, text="Relay 5", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(5))
         self.on_button[4].grid(row=3, column=1, padx=0, pady=15)
 
-        self.on_button[5] = customtkinter.CTkButton(self.home_frame, text="Relay 6", image=self.on, compound="right", width=150, height=50,
+        self.on_button[5] = customtkinter.CTkButton(self.home_frame, text="Relay 6", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(6))
         self.on_button[5].grid(row=3, column=2, padx=50, pady=15)
 
-        self.on_button[6] = customtkinter.CTkButton(self.home_frame, text="Pump1", image=self.on, compound="right", width=150, height=50,
+        self.on_button[6] = customtkinter.CTkButton(self.home_frame, text="Pump1", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(7))
         self.on_button[6].grid(row=4, column=0, padx=80, pady=15)
 
 
-        self.on_button[7] = customtkinter.CTkButton(self.home_frame, text="Pump2", image=self.on, compound="right", width=150, height=50,
+        self.on_button[7] = customtkinter.CTkButton(self.home_frame, text="Pump2", image=self.off, compound="right", width=150, height=50,
                                                  command=lambda :self.toggle_button_click(8))
         self.on_button[7].grid(row=4, column=2, padx=80, pady=15)
 
         # Hien thi muc nuoc
         self.distance1 = customtkinter.CTkProgressBar(self.home_frame, orientation="vertical", corner_radius=0, width = 85)
-        self.distance1.grid(row = 0, column=0, pady=20)
+        self.distance1.grid(row = 0, column=0, pady=(30, 0))
         self.lableDistance1= customtkinter.CTkLabel(self.home_frame, text= "Volume of liquid 1", fg_color= "transparent")
-        self.lableDistance1.grid(row=1, column= 0, pady=0)
+        self.lableDistance1.grid(row=1, column= 0, pady=0) 
 
         self.distance2 = customtkinter.CTkProgressBar(self.home_frame, orientation="vertical", corner_radius=0, width = 85)
-        self.distance2.grid(row = 0, column=2, pady=20)
+        self.distance2.grid(row = 0, column=2, pady=(30, 0))
         self.lableDistance2= customtkinter.CTkLabel(self.home_frame, text= "Volume of liquid 2", fg_color= "transparent", )
         self.lableDistance2.grid(row=1, column= 2, pady=0)
 
@@ -205,6 +206,8 @@ class App(customtkinter.CTk):
 
         self.exit_button = customtkinter.CTkButton(self.second_frame_top, text="Exit", command=self.exit_camera_display, fg_color="green")
         self.exit_button.grid(row=2, column=4, padx=10, pady=5)
+
+        
         
 #------------------------------------------------------------------------------------------------------------
         
@@ -227,23 +230,74 @@ class App(customtkinter.CTk):
         url = f"http://{self.ip}:{self.port}/video"
 
         try:
+            model = load_model("mask.h5", compile=False)
+            with open("labels_mask.txt", "r") as f:
+                 class_names = f.read().splitlines()
+            data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
             cap = cv2.VideoCapture(url)
             if not cap.isOpened():
                 print("Failed to open video stream")
                 return
 
             def update_canvas():
+
+                
                 while not self.exit_flag:
                     ret, frame = cap.read()
                     if not ret:
                         break
 
                     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    frame_pil = Image.fromarray(frame_rgb)
+                    # frame_pil = Image.fromarray(frame_rgb)
+                    # rotated_frame = ImageOps.exif_transpose(frame_pil)
+                    # photo = ImageTk.PhotoImage(rotated_frame)
+                    
+                    size = (224, 224)
+                    image = ImageOps.fit(Image.fromarray(frame_rgb), size, Image.Resampling.LANCZOS)
+                    # Turn the image into a numpy array
+                    image_array = np.asarray(image)
+
+                    # Normalize the image
+                    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
+
+                    # Load the normalized image into the array
+                    data[0] = normalized_image_array
+
+                    prediction = model.predict(data)
+                    index = np.argmax(prediction)
+                    class_name = class_names[index]
+                    confidence_score = prediction[0][index]
+
+                    cv2.putText(
+                                frame,
+                                f"Class: {class_name[2:]}",
+                                (10, 30),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                1,
+                                (0, 255, 0),
+                                2,
+                                cv2.LINE_AA,)
+                    
+                    cv2.putText(
+                                frame,
+                                f"Confidence Score: {confidence_score:.2f}",
+                                (10, 60),
+                                cv2.FONT_HERSHEY_SIMPLEX,
+                                1,
+                                (0, 255, 0),
+                                2,
+                                cv2.LINE_AA)
+                    
+                    frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
+                    frame_pil = Image.fromarray(frame)
                     rotated_frame = ImageOps.exif_transpose(frame_pil)
-                    photo = ImageTk.PhotoImage(rotated_frame)
+                    photo = ImageTk.PhotoImage(rotated_frame)          
+
                     self.displayCamera_canvas.create_image(0, 0, anchor="nw", image=photo)
                     self.displayCamera_canvas.photo = photo  
+
+
+                    
 
                 cap.release()
                 cv2.destroyAllWindows()
@@ -362,7 +416,9 @@ class App(customtkinter.CTk):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
 # ser=RS485Controller()
-# app=App(ser)
+app=App(None)
+#app.UI_Refresh()
+app.mainloop()
         
         
 
