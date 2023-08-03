@@ -438,13 +438,13 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-ser=RS485Controller()
-app=App(ser)
-app.UI_Refresh()
-app.mainloop()
-
-# app=App(None)
+# ser=RS485Controller()
+# app=App(ser)
+# app.UI_Refresh()
 # app.mainloop()
+
+app=App(None)
+app.mainloop()
         
         
 
