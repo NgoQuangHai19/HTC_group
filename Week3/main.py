@@ -8,6 +8,7 @@ from adafruit import *
 from test_UII import *
 import sys
 import time
+from image_example import *
 
 ###
 
@@ -18,7 +19,7 @@ scheduler.SCH_Init()
 monitoring_timer = softwaretimer()
 
 monitoring= MonitoringTask(m485, monitoring_timer)
-main_ui = Main_UI(monitoring)
+main_ui = App(monitoring)
 
 scheduler.SCH_Add_Task(main_ui.UI_Refresh, 1, 100)
 scheduler.SCH_Add_Task(monitoring_timer.Timer_Run, 1, 100)
