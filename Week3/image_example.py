@@ -251,7 +251,7 @@ class App(customtkinter.CTk):
                     # frame_pil = Image.fromarray(frame_rgb)
                     # rotated_frame = ImageOps.exif_transpose(frame_pil)
                     # photo = ImageTk.PhotoImage(rotated_frame)
-                    
+
                     size = (224, 224)
                     image = ImageOps.fit(Image.fromarray(frame_rgb), size, Image.Resampling.LANCZOS)
                     # Turn the image into a numpy array
@@ -415,9 +415,9 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-# ser=RS485Controller()
-app=App(None)
-#app.UI_Refresh()
+ser=RS485Controller()
+app=App(ser)
+app.UI_Refresh()
 app.mainloop()
         
         
