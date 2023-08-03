@@ -294,7 +294,7 @@ class App(customtkinter.CTk):
                                     (10, 30),
                                     cv2.FONT_HERSHEY_SIMPLEX,
                                     1,
-                                    (0, 255, 0),
+                                    (138,43,226),
                                     2,
                                     cv2.LINE_AA,)
 
@@ -304,7 +304,7 @@ class App(customtkinter.CTk):
                                     (10, 60),
                                     cv2.FONT_HERSHEY_SIMPLEX,
                                     1,
-                                    (0, 255, 0),
+                                    (138,43,226),
                                     2,
                                     cv2.LINE_AA)
 
@@ -438,13 +438,13 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-ser=RS485Controller()
-app=App(ser)
-app.UI_Refresh()
-app.mainloop()
-
-# app=App(None)
+# ser=RS485Controller()
+# app=App(ser)
+# app.UI_Refresh()
 # app.mainloop()
+
+app=App(None)
+app.mainloop()
         
         
 
