@@ -207,7 +207,11 @@ class App(customtkinter.CTk):
         self.exit_button = customtkinter.CTkButton(self.second_frame_top, text="Exit", command=self.exit_camera_display, fg_color="green")
         self.exit_button.grid(row=2, column=4, padx=10, pady=5)
 
-        
+        self.model_button1 = customtkinter.CTkButton(self.second_frame_top, text="Mask Recognizer", command=lambda :self.model_flag(1), fg_color="green")
+        self.model_button1.grid(row=2, column=2, padx=(20,0), pady=5)
+
+        self.model_button2 = customtkinter.CTkButton(self.second_frame_top, text="Leaf Recognizer", command=lambda :self.model_flag(2), fg_color="green")
+        self.model_button2.grid(row=2, column=1, padx=(20,0), pady=5)
         
 #------------------------------------------------------------------------------------------------------------
         
@@ -225,14 +229,21 @@ class App(customtkinter.CTk):
             print("Please enter valid IP and port")
             return
 
-        self.exit_flag = False  
+        self.exit_flag = False 
+        self.flag = 0 
 
         url = f"http://{self.ip}:{self.port}/video"
 
         try:
-            model = load_model("mask.h5", compile=False)
+            #Load model 1
+            model1 = load_model("mask.h5", compile=False)
             with open("labels_mask.txt", "r") as f:
-                 class_names = f.read().splitlines()
+                class_names1 = f.read().splitlines()
+            #Load model 2
+            model2 = load_model("mangoLeaf.h5", compile=False)
+            with open("labels_mangoLeaf.txt", "r") as f:
+                class_names2 = f.read().splitlines()
+
             data = np.ndarray(shape=(1, 224, 224, 3), dtype=np.float32)
             cap = cv2.VideoCapture(url)
             if not cap.isOpened():
@@ -246,52 +257,61 @@ class App(customtkinter.CTk):
                     ret, frame = cap.read()
                     if not ret:
                         break
-
                     frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-                    # frame_pil = Image.fromarray(frame_rgb)
-                    # rotated_frame = ImageOps.exif_transpose(frame_pil)
-                    # photo = ImageTk.PhotoImage(rotated_frame)
-
-                    size = (224, 224)
-                    image = ImageOps.fit(Image.fromarray(frame_rgb), size, Image.Resampling.LANCZOS)
-                    # Turn the image into a numpy array
-                    image_array = np.asarray(image)
-
-                    # Normalize the image
-                    normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1
-
-                    # Load the normalized image into the array
-                    data[0] = normalized_image_array
-
-                    prediction = model.predict(data)
-                    index = np.argmax(prediction)
-                    class_name = class_names[index]
-                    confidence_score = prediction[0][index]
-
-                    cv2.putText(
-                                frame,
-                                f"Class: {class_name[2:]}",
-                                (10, 30),
-                                cv2.FONT_HERSHEY_SIMPLEX,
-                                1,
-                                (0, 255, 0),
-                                2,
-                                cv2.LINE_AA,)
                     
-                    cv2.putText(
-                                frame,
-                                f"Confidence Score: {confidence_score:.2f}",
-                                (10, 60),
-                                cv2.FONT_HERSHEY_SIMPLEX,
-                                1,
-                                (0, 255, 0),
-                                2,
-                                cv2.LINE_AA)
-                    
-                    frame=cv2.cvtColor(frame,cv2.COLOR_BGR2RGB)
-                    frame_pil = Image.fromarray(frame)
-                    rotated_frame = ImageOps.exif_transpose(frame_pil)
-                    photo = ImageTk.PhotoImage(rotated_frame)          
+                    if self.flag == 0 :    
+                        frame_pil = Image.fromarray(frame_rgb)
+                        rotated_frame = ImageOps.exif_transpose(frame_pil)
+                        photo = ImageTk.PhotoImage(rotated_frame)
+
+                    else:
+
+                        if self.flag == 1 :
+                            model=model1
+                            class_names=class_names1
+                        
+                        if self.flag == 2 :
+                            model=model2
+                            class_names=class_names2
+
+                        size = (224, 224)
+                        image = ImageOps.fit(Image.fromarray(frame_rgb), size, Image.Resampling.LANCZOS)
+                        # Turn the image into a numpy array
+                        image_array = np.asarray(image)
+                        # Normalize the image
+                        normalized_image_array = (image_array.astype(np.float32) / 127.5) - 1     
+                        # Load the normalized image into the array
+                        data[0] = normalized_image_array 
+
+                        prediction = model.predict(data)
+                        index = np.argmax(prediction)
+                        class_name = class_names[index]
+                        confidence_score = prediction[0][index] 
+                                                         
+                        cv2.putText(
+                                    frame,
+                                    f"Class: {class_name[2:]}",
+                                    (10, 30),
+                                    cv2.FONT_HERSHEY_SIMPLEX,
+                                    1,
+                                    (0, 255, 0),
+                                    2,
+                                    cv2.LINE_AA,)
+
+                        cv2.putText(
+                                    frame,
+                                    f"Confidence Score: {confidence_score:.2f}",
+                                    (10, 60),
+                                    cv2.FONT_HERSHEY_SIMPLEX,
+                                    1,
+                                    (0, 255, 0),
+                                    2,
+                                    cv2.LINE_AA)
+
+                        frame=cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                        frame_pil = Image.fromarray(frame)
+                        rotated_frame = ImageOps.exif_transpose(frame_pil)
+                        photo = ImageTk.PhotoImage(rotated_frame)          
 
                     self.displayCamera_canvas.create_image(0, 0, anchor="nw", image=photo)
                     self.displayCamera_canvas.photo = photo  
@@ -319,6 +339,8 @@ class App(customtkinter.CTk):
         # if hasattr(self, "exit_button"):
         #     self.exit_button.destroy()
 
+    def model_flag(self, flag):
+        self.flag = flag
 
     def option_display(self, selected_camera):
 
@@ -328,6 +350,7 @@ class App(customtkinter.CTk):
         else:
             self.ip = self.var_IP_camera_2.get()  
             self.port = self.port_camera_2.get()   
+   
 
 #--------------------------------------------------------------------------------------------------------
 
@@ -415,9 +438,12 @@ class App(customtkinter.CTk):
     def change_appearance_mode_event(self, new_appearance_mode):
         customtkinter.set_appearance_mode(new_appearance_mode)
 
-ser=RS485Controller()
-app=App(ser)
-app.UI_Refresh()
+# ser=RS485Controller()
+# app=App(ser)
+# app.UI_Refresh()
+# app.mainloop()
+
+app=App(None)
 app.mainloop()
         
         
