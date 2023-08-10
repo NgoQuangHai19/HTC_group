@@ -294,7 +294,7 @@ class App(customtkinter.CTk):
                                     (10, 30),
                                     cv2.FONT_HERSHEY_SIMPLEX,
                                     1,
-                                    (138,43,226),
+                                    (128,0,0),
                                     2,
                                     cv2.LINE_AA,)
 
@@ -304,7 +304,7 @@ class App(customtkinter.CTk):
                                     (10, 60),
                                     cv2.FONT_HERSHEY_SIMPLEX,
                                     1,
-                                    (138,43,226),
+                                    (128,0,0),
                                     2,
                                     cv2.LINE_AA)
 
